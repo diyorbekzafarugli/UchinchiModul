@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "ac2469e5-8179-4df7-9b7b-1c0cc92908f1",
+    "Name": "Iphone 17 Pro",
+    "Price": 1100,
+    "CreatedAt": "2026-02-02T15:17:49.2944382Z"
+  },
+  {
+    "Id": "3361fc90-002b-463c-bb74-4a10de8b3220",
+    "Name": "Noutbook Asus Tuf Gamming A17",
+    "Price": 950,
+    "CreatedAt": "2026-02-02T15:35:33.1795714Z"
+  }
+]
