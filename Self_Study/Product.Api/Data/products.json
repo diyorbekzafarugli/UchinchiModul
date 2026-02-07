@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "69aff208-0e97-4669-a33e-7436ae42af03",
+    "Name": "Iphone 17 pro max",
+    "Price": 1299,
+    "Stock": 12,
+    "Category": "Smartphones",
+    "CreatedAt": "2026-02-06T05:38:16.048283Z",
+    "UpdatedAt": null
+  },
+  {
+    "Id": "42b81575-1f2d-41f0-8251-d2ce90b64949",
+    "Name": "Samsung Galaxy S25 Ultra",
+    "Price": 1400,
+    "Stock": 20,
+    "Category": "Smartphones",
+    "CreatedAt": "2026-02-06T05:39:22.6432405Z",
+    "UpdatedAt": null
+  },
+  {
+    "Id": "871ebd05-fdc0-4ce8-bad1-e051c1805d07",
+    "Name": "Samsung Galaxy S25 Plus",
+    "Price": 900,
+    "Stock": 10,
+    "Category": "Smartphones",
+    "CreatedAt": "2026-02-06T05:39:53.3509551Z",
+    "UpdatedAt": null
+  },
+  {
+    "Id": "e9e828f6-c8f8-4e92-8c41-f13a70014fa4",
+    "Name": "Samsung OLED A12090",
+    "Price": 900,
+    "Stock": 10,
+    "Category": "SmartTV",
+    "CreatedAt": "2026-02-06T05:40:41.958714Z",
+    "UpdatedAt": null
+  }
+]

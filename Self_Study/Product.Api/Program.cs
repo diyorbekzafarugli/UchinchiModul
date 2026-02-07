@@ -1,4 +1,7 @@
 
+using Product.Api.Repositories;
+using Product.Api.Services;
+
 namespace Product.Api;
 
 public class Program
@@ -7,18 +10,18 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
 
         builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
-
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IProductService, ProductService>();
+        builder.Services.AddScoped<IRepositoriy<Entities.Product>, ProductRepository>();
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

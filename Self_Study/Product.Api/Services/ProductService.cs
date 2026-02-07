@@ -1,5 +1,6 @@
 ﻿using Product.Api.Dtos;
 using Product.Api.Repositories;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Product.Api.Services;
 
@@ -72,6 +73,17 @@ public class ProductService : IProductService
 
     public bool Update(Guid id, UpdateProductDto updateProductDto)
     {
-        throw new NotImplementedException();
+        if(id != updateProductDto.Id) return false;
+        if (updateProductDto.Name.Length < 3 || updateProductDto.Price <= 0 || updateProductDto.Stock < 0 || updateProductDto.Category.Length == 0) return false;
+        var product = _repository.GetById(id);
+        if (product is null) return false;
+
+        product.Name = updateProductDto.Name;
+        product.Price = updateProductDto.Price;
+        product.Category = updateProductDto.Category;
+        product.Stock = updateProductDto.Stock;
+        product.UpdatedAt = DateTime.UtcNow;
+        _repository.Update(product);
+        return true;
     }
 }

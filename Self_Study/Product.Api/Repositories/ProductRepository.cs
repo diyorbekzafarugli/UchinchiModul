@@ -10,7 +10,7 @@ public class ProductRepository : IRepositoriy<Product.Api.Entities.Product>
     public ProductRepository()
     {
         if (!Directory.Exists("Data")) Directory.CreateDirectory("Data");
-        _filePath = Path.Combine("Data", "products.json");
+        _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "products.json");
     }
 
     private List<Entities.Product> ReadFromFile()
@@ -26,6 +26,7 @@ public class ProductRepository : IRepositoriy<Product.Api.Entities.Product>
         {
             WriteIndented = true
         });
+        File.WriteAllText(_filePath, json);
     }
     public Guid Add(Entities.Product product)
     {
@@ -39,12 +40,15 @@ public class ProductRepository : IRepositoriy<Product.Api.Entities.Product>
     public bool Delete(Guid id)
     {
         var products = ReadFromFile();
-        var product = GetById(id);
-        if (product is null) return false;
-
-        products.Remove(product);
-        WriteToFile(products);
-        return true;
+        for (int i = 0; i < products.Count; i++)
+        {
+            if (products[i].Id == id)
+            {
+                products.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Entities.Product> GetAll()
@@ -74,7 +78,7 @@ public class ProductRepository : IRepositoriy<Product.Api.Entities.Product>
         {
             if (products[i].Id == product.Id)
             {
-                products = product;
+                products[i] = product;
                 WriteToFile(products);
                 return true;
             }

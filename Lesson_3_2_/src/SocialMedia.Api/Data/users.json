@@ -1,0 +1,14 @@
+[
+  {
+    "UserId": "a3ca622c-f61e-4c65-b660-b67d5cbb018e",
+    "UserName": "diyorbek_zafarugli",
+    "Password": "aa12aa12aa12",
+    "FullName": "Diyorbek Bo\u0027riboyev",
+    "DateOfBirth": "1997-12-02T08:35:18.746Z",
+    "UserStatus": 2,
+    "IsBlocked": false,
+    "BlockReason": null,
+    "CreatedAt": "2026-02-07T08:36:34.2605088Z",
+    "UpdatedAt": null
+  }
+]
