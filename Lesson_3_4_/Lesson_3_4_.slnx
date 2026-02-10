@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MySocialMedia.Api/MySocialMedia.Api.csproj" />
+  </Folder>
+</Solution>
