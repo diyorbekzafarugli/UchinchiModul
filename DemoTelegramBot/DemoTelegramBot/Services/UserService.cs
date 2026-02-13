@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using MySocialMedia.Api.Dtos;
-using MySocialMedia.Api.Entities;
-using MySocialMedia.Api.Repositories;
-using MySocialMedia.Api.Security;
-using System.Collections.Generic;
+﻿
+using DemoTelegramBot.Dtos;
+using DemoTelegramBot.Entities;
+using DemoTelegramBot.Repositories;
+using DemoTelegramBot.Security;
 
-namespace MySocialMedia.Api.Services;
+using DemoTelegramBot.Services;
+
+namespace DemoTelegramBot.Services;
 
 public class UserService : IUserService
 {
@@ -122,9 +123,10 @@ public class UserService : IUserService
         var access = CheckAccess(token.UserId);
         if (!access.Success) return Result<bool>.Fail(access.Error!);
 
-        if (!AuthorizeService.IsValidPassword(newPassword, out var error))
+        if (!AuthService.IsValidPassword(newPassword, out var error))
             return Result<bool>.Fail(error);
 
+        // Eslatma: agar sen hashing qilayotgan bo'lsang bu yerda hashed yubor
         var ok = _userRepository.ChangePassword(token.UserId, newPassword);
         return ok ? Result<bool>.Ok(true) : Result<bool>.Fail("Foydalanuvchi topilmadi.");
     }
@@ -134,6 +136,7 @@ public class UserService : IUserService
         var access = CheckAccess(token.UserId);
         if (!access.Success) return Result<bool>.Fail(access.Error!);
 
+        // ✅ faqat SuperAdmin
         if (token.Role != UserRole.SuperAdmin)
             return Result<bool>.Fail("Sizda role o'zgartirish huquqi yo'q.");
 
