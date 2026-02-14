@@ -1,4 +1,4 @@
-﻿namespace PostsSocialMedia.Api.Entities;
+﻿namespace PostsSocialMedia.Api.Entities.Comment;
 
 public class Comment : IEntity
 {

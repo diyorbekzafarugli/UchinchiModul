@@ -1,4 +1,4 @@
-﻿using PostsSocialMedia.Api.Entities;
+﻿using PostsSocialMedia.Api.Entities.Notification;
 
 namespace PostsSocialMedia.Api.Repositories;
 

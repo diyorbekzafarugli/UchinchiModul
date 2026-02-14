@@ -1,4 +1,4 @@
-﻿namespace PostsSocialMedia.Api.Entities;
+﻿namespace PostsSocialMedia.Api.Entities.Reaction;
 
 public enum ReactionType
 {

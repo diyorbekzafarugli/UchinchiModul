@@ -1,5 +1,4 @@
-﻿
-namespace PostsSocialMedia.Api.Entities;
+﻿namespace PostsSocialMedia.Api.Entities.Reaction;
 
 public class Reaction : IEntity
 {

@@ -1,14 +1,12 @@
-﻿using System.Security.Principal;
+﻿using PostsSocialMedia.Api.Entities.Notification;
 
-namespace PostsSocialMedia.Api.Entities;
+namespace PostsSocialMedia.Api.Dtos.NotificationDto;
 
-public class Notification : IEntity
+public class NotificationGetDto
 {
     public Guid Id { get; set; }
-    public Guid ToUserId { get; set; }
     public Guid FromUserId { get; set; }
     public TypeNotification Type { get; set; }
     public string Message { get; set; }
-    public bool IsRead { get; set; }
     public DateTime CreatedAt { get; set; }
 }

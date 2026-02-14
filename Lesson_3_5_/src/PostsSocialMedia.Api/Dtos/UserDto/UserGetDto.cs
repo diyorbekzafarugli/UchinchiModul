@@ -1,13 +1,11 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Security.Principal;
+﻿using PostsSocialMedia.Api.Entities.User;
 
-namespace PostsSocialMedia.Api.Entities;
+namespace PostsSocialMedia.Api.Dtos.UserDto;
 
-public class User : IEntity
+public class UserGetDto
 {
     public Guid Id { get; set; }
     public string UserName { get; set; }
-    public string Password { get; set; }
     public string LastName { get; set; }
     public string FirstName { get; set; }
     public UserRole Role { get; set; }
@@ -21,4 +19,3 @@ public class User : IEntity
         ? BlockedAt is not null
         : BlockedUntil > DateTime.UtcNow;
 }
-

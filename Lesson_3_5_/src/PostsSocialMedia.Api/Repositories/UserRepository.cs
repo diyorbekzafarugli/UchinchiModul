@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PostsSocialMedia.Api.Entities;
+using PostsSocialMedia.Api.Entities.User;
 
 namespace PostsSocialMedia.Api.Repositories;
 

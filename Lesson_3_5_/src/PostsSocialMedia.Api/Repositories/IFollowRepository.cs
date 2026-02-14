@@ -1,4 +1,4 @@
-﻿using PostsSocialMedia.Api.Entities;
+﻿using PostsSocialMedia.Api.Entities.Follow;
 
 namespace PostsSocialMedia.Api.Repositories;
 
