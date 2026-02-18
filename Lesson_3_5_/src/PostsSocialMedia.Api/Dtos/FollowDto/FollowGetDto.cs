@@ -8,7 +8,7 @@ public class FollowGetDto
     public string UserName { get; set; }
     public string LastName { get; set; }
     public string FirstName { get; set; }
-    public bool IsFollowing { get; set; }
+    public bool IsFollowedByMe { get; set; }
     public DateTime FollowedAt { get; set; }
 }
     

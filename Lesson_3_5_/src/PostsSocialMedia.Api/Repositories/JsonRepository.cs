@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PostsSocialMedia.Api.Entities;
+﻿using PostsSocialMedia.Api.Entities;
 using System.Text.Json;
 
 namespace PostsSocialMedia.Api.Repositories;
 
 public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
 {
-    protected readonly string _filePath;
+    private readonly string _filePath;
 
     protected static readonly object _fileLock = new();
 
@@ -22,7 +21,7 @@ public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
         if (!File.Exists(_filePath)) File.WriteAllText(_filePath, "[]");
     }
 
-    private void SaveAll_NoLock(List<T> items)
+    protected void SaveAll_NoLock(List<T> items)
     {
         var json = JsonSerializer.Serialize(items, _jsonOptions);
         var dir = Path.GetDirectoryName(_filePath)!;
@@ -32,7 +31,7 @@ public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
         File.Move(tempPath, _filePath, overwrite: true);
     }
 
-    private List<T> ReadAll_NoLock()
+    protected List<T> ReadAll_NoLock()
     {
         try
         {

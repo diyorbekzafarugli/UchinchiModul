@@ -10,5 +10,5 @@ public interface IPostRepository
     IReadOnlyList<Post> GetAll();
     bool Update(Post postUpdated);
     bool Delete(Guid id);
-    IReadOnlyList<Post> GetAllPosts(Guid userId);
+    IReadOnlyList<Post> GetPostsByUserId(Guid userId);
 }

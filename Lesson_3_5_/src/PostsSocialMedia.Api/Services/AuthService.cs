@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using PostsSocialMedia.Api.Dtos.UserDto;
 using PostsSocialMedia.Api.Entities;
 using PostsSocialMedia.Api.Entities.User;
 using PostsSocialMedia.Api.Repositories;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 
@@ -47,7 +45,7 @@ public class AuthService : IAuthService
         if (userCreateDto.LastName.Length > 64)
             return Result<Guid>.Fail("Foydalanuvchi familiyasi 64 ta belgidan oshmasligi kerak");
 
-        if(userCreateDto.DateOfBirth.AddYears(14) > DateTime.UtcNow)
+        if (userCreateDto.DateOfBirth.AddYears(14) > DateTime.UtcNow)
             return Result<Guid>.Fail("Foydalanuvchi 14 yoshdan oshgan bo'lishi kerak");
 
         var user = new User()

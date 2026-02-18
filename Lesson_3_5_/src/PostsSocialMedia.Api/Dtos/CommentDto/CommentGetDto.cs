@@ -1,4 +1,6 @@
-﻿namespace PostsSocialMedia.Api.Dtos.CommentDto;
+﻿using PostsSocialMedia.Api.Dtos.ReactionDto;
+
+namespace PostsSocialMedia.Api.Dtos.CommentDto;
 
 public class CommentGetDto
 {
@@ -9,4 +11,6 @@ public class CommentGetDto
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public ReactionStatsDto StatsDto { get; set; }
+    public int RepliesCount { get; set; }
 }

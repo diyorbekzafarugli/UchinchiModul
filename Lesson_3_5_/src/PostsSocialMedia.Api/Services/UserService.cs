@@ -62,14 +62,7 @@ public class UserService : IUserService
         if (page <= 0 || pageSize <= 0)
             return Result<List<UserGetDto>>.Fail("Sahifa raqami manfiy bo'lishi mumkin emas");
 
-        var query = _userRepository.GetAll()
-            .Where(u => u.UserName.Contains(searchTerm)
-            || u.LastName.Contains(searchTerm) || u.FirstName.Contains(searchTerm));
-
-        var users = query
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToList();
+        var users = _userRepository.GetUsersByName(searchTerm, page, pageSize);
 
         var usersDto = _mapper.Map<List<UserGetDto>>(users);
         return Result<List<UserGetDto>>.Ok(usersDto);

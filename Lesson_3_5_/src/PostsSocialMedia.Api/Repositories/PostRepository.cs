@@ -9,11 +9,10 @@ public class PostRepository : JsonRepository<Post>, IPostRepository
 
     }
 
-    public IReadOnlyList<Post> GetAllPosts(Guid userId)
+    public IReadOnlyList<Post> GetPostsByUserId(Guid userId)
     {
         return GetAll()
             .Where(u => u.UserId == userId)
-            .ToList()
-            .AsReadOnly();
+            .ToList();
     }
 }

@@ -15,4 +15,22 @@ public class UserRepository : JsonRepository<User>, IUserRepository
         return GetAll()
             .FirstOrDefault(u => u.UserName == userName);
     }
+
+    public List<User> GetUsersByIds(List<Guid> ids)
+    {
+        return GetAll()
+            .Where(u => ids.Contains(u.Id))
+            .ToList();
+    }
+
+    public List<User> GetUsersByName(string searchTerm, int page, int pageSize)
+    {
+        return GetAll()
+            .Where(u => u.UserName.Contains(searchTerm)
+            || u.LastName.Contains(searchTerm)
+            || u.FirstName.Contains(searchTerm))
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
 }
