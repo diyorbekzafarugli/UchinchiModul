@@ -4,9 +4,8 @@ namespace PostsSocialMedia.Api.Repositories;
 
 public interface IJsonRepository<T> where T : class, IEntity
 {
-    void Add(T item);
-    T? GetById(Guid id);
-    IReadOnlyList<T> GetAll();
-    bool Update(T updatedItem);
-    bool Delete(Guid id);
+    Task Add(T item);
+    Task<T?> GetById(Guid id);
+    Task<IReadOnlyList<T>> GetAll();
+    Task Delete(Guid id);
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PostsSocialMedia.Api.Dtos.UserDto;
 using PostsSocialMedia.Api.Services;
 
@@ -16,18 +15,18 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public IActionResult Register(UserCreateDto userCreateDto)
+    public async Task<IActionResult> Register(UserCreateDto userCreateDto)
     {
-        var result = _authService.Register(userCreateDto);
+        var result = await _authService.RegisterAsync(userCreateDto);
         if (!result.Success) return BadRequest(result.Error);
 
         return Ok(result.Data);
     }
 
     [HttpPost("login")]
-    public IActionResult Login(string userName, string password)
+    public async Task<IActionResult> Login(string userName, string password)
     {
-        var result = _authService.LoginUser(userName, password);
+        var result = await _authService.LoginUserAsync(userName, password);
         if (!result.Success) return Unauthorized(result.Error);
 
         return Ok(new { Token = result.Data });

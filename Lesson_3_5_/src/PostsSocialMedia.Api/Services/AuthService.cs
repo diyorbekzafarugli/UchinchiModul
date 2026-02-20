@@ -13,17 +13,19 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
+
     public AuthService(IUserRepository userRepository, IConfiguration configuration)
     {
         _userRepository = userRepository;
         _configuration = configuration;
     }
-    public Result<Guid> Register(UserCreateDto userCreateDto)
+
+    public async Task<Result<Guid>> RegisterAsync(UserCreateDto userCreateDto)
     {
         if (string.IsNullOrWhiteSpace(userCreateDto.UserName))
-            return Result<Guid>.Fail("Foydalanuvhci nomi bo'sh bo'lishi mumkin emas");
+            return Result<Guid>.Fail("Foydalanuvchi nomi bo'sh bo'lishi mumkin emas");
 
-        var existingUser = _userRepository.GetByUserName(userCreateDto.UserName);
+        var existingUser = await _userRepository.GetByUserName(userCreateDto.UserName);
         if (existingUser is not null)
             return Result<Guid>.Fail("Foydalanuvchi nomi band iltimos qaytadan kiriting");
 
@@ -64,12 +66,13 @@ public class AuthService : IAuthService
             BlockReason = null
         };
 
-        _userRepository.Add(user);
+        await _userRepository.Add(user);
         return Result<Guid>.Ok(user.Id);
     }
-    public Result<string> LoginUser(string userName, string password)
+
+    public async Task<Result<string>> LoginUserAsync(string userName, string password)
     {
-        var user = _userRepository.GetByUserName(Normalize(userName));
+        var user = await _userRepository.GetByUserName(Normalize(userName));
         if (user is null)
             return Result<string>.Fail("Login yoki parol xato");
 
@@ -82,6 +85,7 @@ public class AuthService : IAuthService
     }
 
     public static string Normalize(string text) => (text ?? string.Empty).Trim();
+
     public static bool IsValidPassword(string password, out string error)
     {
         error = string.Empty;
@@ -90,7 +94,7 @@ public class AuthService : IAuthService
         { error = "Parol bo'sh bo'lishi mumkin emas"; return false; }
 
         if (password.Length != password.Trim().Length)
-        { error = "Parolning boshi yoki oxirida bo'sh joy bo'lshi mumkin emas"; return false; }
+        { error = "Parolning boshi yoki oxirida bo'sh joy bo'lishi mumkin emas"; return false; }
 
         if (password.Length < 8 || password.Length > 64)
         { error = "Parolda kamida 8 tadan 64 tagacha belgi bo'lishi kerak"; return false; }
@@ -98,21 +102,16 @@ public class AuthService : IAuthService
         if (password.Any(char.IsWhiteSpace))
         { error = "Parolda bo'sh joylar bo'lishi mumkin emas"; return false; }
 
-        bool hasUpperCase = password.Any(char.IsUpper);
-        bool hasLowerCase = password.Any(char.IsLower);
-        bool hasDigit = password.Any(char.IsDigit);
-        bool hasSpecial = password.Any(ch => !char.IsLetterOrDigit(ch));
-
-        if (!hasUpperCase)
+        if (!password.Any(char.IsUpper))
         { error = "Parolda katta harf ishtirok etishi kerak"; return false; }
 
-        if (!hasLowerCase)
+        if (!password.Any(char.IsLower))
         { error = "Parolda kichik harf ishtirok etishi kerak"; return false; }
 
-        if (!hasDigit)
+        if (!password.Any(char.IsDigit))
         { error = "Parolda raqam ishtirok etishi kerak"; return false; }
 
-        if (!hasSpecial)
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
         { error = "Parolda maxsus belgi ishtirok etishi kerak"; return false; }
 
         return true;
@@ -120,12 +119,10 @@ public class AuthService : IAuthService
 
     private string GenerateJwtToken(User user)
     {
-        // Appsettings.json dan ma'lumotlar 
         var secretKey = _configuration["JwtOptions:SecretKey"]!;
         var issuer = _configuration["JwtOptions:Issuer"];
         var audience = _configuration["JwtOptions:Audience"];
 
-        // 1. Token ichida nima ma'lumotlar bo'lishi(Claims)
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -133,11 +130,9 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 
-        // 2. Maxfiy kalitni kodirovkadan o'tkazamiz
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        // 3. Tokenning "Passport" qismini yig'amiz
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
@@ -146,8 +141,6 @@ public class AuthService : IAuthService
             signingCredentials: creds
         );
 
-        // 4. Tokenni matn ko'rinishiga o'tkazib qaytaramiz 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-
 }

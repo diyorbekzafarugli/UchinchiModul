@@ -9,10 +9,10 @@ public class PostRepository : JsonRepository<Post>, IPostRepository
 
     }
 
-    public IReadOnlyList<Post> GetPostsByUserId(Guid userId)
+    public async Task<List<Post>> GetPostsByUserId(Guid userId)
     {
-        return GetAll()
-            .Where(u => u.UserId == userId)
-            .ToList();
+        var posts = await GetAll();
+        return posts.Where(u => u.UserId == userId)
+                    .ToList();
     }
 }

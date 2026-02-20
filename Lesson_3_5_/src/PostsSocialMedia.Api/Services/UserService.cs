@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using Mapster;
 using PostsSocialMedia.Api.Dtos.UserDto;
 using PostsSocialMedia.Api.Entities;
 using PostsSocialMedia.Api.Repositories;
@@ -8,72 +8,66 @@ namespace PostsSocialMedia.Api.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _mapper = mapper;
     }
 
-    public Result<bool> Delete(Guid id)
+    public async Task<Result<bool>> DeleteAsync(Guid id)
     {
-        if (id == Guid.Empty) return Result<bool>.Fail("Foydalanuvchi IDsi xato kiritldi");
+        if (id == Guid.Empty) return Result<bool>.Fail("Foydalanuvchi IDsi xato kiritildi");
 
-        bool isExist = _userRepository.Delete(id);
-        if (!isExist) return Result<bool>.Fail("Foydalanuvchi topilmadi");
-
-        return Result<bool>.Ok(isExist);
+        await _userRepository.Delete(id);
+        return Result<bool>.Ok(true);
     }
 
-    public Result<UserGetDto> GetById(Guid id)
+    public async Task<Result<UserGetDto>> GetByIdAsync(Guid id)
     {
-        if (id == Guid.Empty) return Result<UserGetDto>.Fail("Foydalanuvchi IDsi xato kiritldi");
+        if (id == Guid.Empty) return Result<UserGetDto>.Fail("Foydalanuvchi IDsi xato kiritildi");
 
-        var user = _userRepository.GetById(id);
+        var user = await _userRepository.GetById(id);
         if (user is null) return Result<UserGetDto>.Fail("Foydalanuvchi topilmadi");
 
         if (user.IsBlocked) return Result<UserGetDto>.Fail("Foydalanuvchi block holatida");
 
-        var userDto = _mapper.Map<UserGetDto>(user);
-
+        var userDto = user.Adapt<UserGetDto>();
         return Result<UserGetDto>.Ok(userDto);
     }
 
-    public Result<UserGetDto> GetByUserName(string userName)
+    public async Task<Result<UserGetDto>> GetByUserNameAsync(string userName)
     {
         if (string.IsNullOrWhiteSpace(userName))
             return Result<UserGetDto>.Fail("Foydalanuvchi nomi bo'sh bo'lishi mumkin emas");
 
-        var user = _userRepository.GetByUserName(AuthService.Normalize(userName));
+        var user = await _userRepository.GetByUserName(AuthService.Normalize(userName));
         if (user is null) return Result<UserGetDto>.Fail("Foydalanuvchi topilmadi");
 
-        if (user.IsBlocked) return Result<UserGetDto>.Fail("Foydalanuvhci block holatida");
+        if (user.IsBlocked) return Result<UserGetDto>.Fail("Foydalanuvchi block holatida");
 
-        var userDto = _mapper.Map<UserGetDto>(user);
-
+        var userDto = user.Adapt<UserGetDto>();
         return Result<UserGetDto>.Ok(userDto);
     }
 
-    public Result<List<UserGetDto>> Search(string searchTerm, int page, int pageSize)
+    public async Task<Result<List<UserGetDto>>> SearchAsync(string searchTerm, int page, int pageSize)
     {
         if (string.IsNullOrWhiteSpace(searchTerm))
             return Result<List<UserGetDto>>.Fail("Qidiralayotgan foydalanuvchining nomi bo'sh bo'lishi mumkin emas");
 
         if (page <= 0 || pageSize <= 0)
-            return Result<List<UserGetDto>>.Fail("Sahifa raqami manfiy bo'lishi mumkin emas");
+            return Result<List<UserGetDto>>.Fail("Sahifa raqami yoki hajmi xato kiritildi");
 
-        var users = _userRepository.GetUsersByName(searchTerm, page, pageSize);
+        var users = await _userRepository.GetUsersByName(searchTerm, page, pageSize);
 
-        var usersDto = _mapper.Map<List<UserGetDto>>(users);
+        var usersDto = users.Adapt<List<UserGetDto>>();
         return Result<List<UserGetDto>>.Ok(usersDto);
     }
 
-    public Result<bool> Update(Guid currentUserId, UserUpdateDto userUpdateDto)
+    public async Task<Result<bool>> UpdateAsync(Guid currentUserId, UserUpdateDto userUpdateDto)
     {
         if (currentUserId != userUpdateDto.Id)
             return Result<bool>.Fail("Siz boshqa foydalanuvchining profilini tahrirlay olmaysiz!");
 
-        var userFromDB = _userRepository.GetById(currentUserId);
+        var userFromDB = await _userRepository.GetById(currentUserId);
         if (userFromDB is null)
             return Result<bool>.Fail("Foydalanuvchi topilmadi.");
 
@@ -83,7 +77,7 @@ public class UserService : IUserService
         string normalizedNewUserName = AuthService.Normalize(userUpdateDto.UserName);
         if (userFromDB.UserName != normalizedNewUserName)
         {
-            var existingUser = _userRepository.GetByUserName(userUpdateDto.UserName);
+            var existingUser = await _userRepository.GetByUserName(userUpdateDto.UserName);
             if (existingUser is not null)
                 return Result<bool>.Fail("Foydalanuvchi nomi band iltimos qaytadan kiriting");
         }
@@ -91,10 +85,11 @@ public class UserService : IUserService
         var validation = ValidateUserUpdate(userUpdateDto);
         if (!validation.Success) return validation;
 
-        _mapper.Map(userUpdateDto, userFromDB);
+        userUpdateDto.Adapt(userFromDB);
         userFromDB.UpdatedAt = DateTime.UtcNow;
 
-        return Result<bool>.Ok(_userRepository.Update(userFromDB));
+        await _userRepository.Update(userFromDB);
+        return Result<bool>.Ok(true);
     }
 
     private Result<bool> ValidateUserUpdate(UserUpdateDto userUpdateDto)

@@ -4,65 +4,65 @@ namespace PostsSocialMedia.Api.Repositories;
 
 public class CommentRepository : JsonRepository<Comment>, ICommentRepository
 {
-    public CommentRepository() : base("Comments")
-    {
+    public CommentRepository() : base("Comments") { }
 
-    }
-
-    public void DeleteAllByPostId(Guid postId)
+    public async Task DeleteAllByPostId(Guid postId)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var allComments = ReadAll_NoLock();
+            var allComments = await ReadAll_NoLock();
 
             int removedCount = allComments.RemoveAll(c => c.PostId == postId);
 
             if (removedCount > 0)
             {
-                SaveAll_NoLock(allComments);
-                return;
+                await SaveAll_NoLock(allComments);
             }
-            return;
         }
+        finally { _semaphore.Release(); }
     }
 
-    public void DeleteRange(List<Guid> ids)
+    public async Task DeleteRange(List<Guid> ids)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var allComments = ReadAll_NoLock();
+            var allComments = await ReadAll_NoLock();
             var idsSet = ids.ToHashSet();
 
             int removedCount = allComments.RemoveAll(c => idsSet.Contains(c.Id));
 
-            if(removedCount > 0)
+            if (removedCount > 0)
             {
-                SaveAll_NoLock(allComments);
-                return;
+                await SaveAll_NoLock(allComments);
             }
-            return;
         }
+        finally { _semaphore.Release(); }
     }
 
-    public IReadOnlyList<Comment> GetAllByPostId(Guid postId)
+    public async Task<IReadOnlyList<Comment>> GetAllByPostId(Guid postId)
     {
-        return GetAll()
-            .Where(p => p.PostId == postId)
-            .ToList();
+        var comments = await GetAll();
+        return comments.Where(p => p.PostId == postId)
+                       .ToList();
     }
 
-    public int GetCoutnByPostId(Guid postId)
+    public async Task<int> GetCountByPostId(Guid postId)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            return ReadAll_NoLock().Count(c => c.PostId == postId);
+            var comments = await ReadAll_NoLock();
+            return comments.Count(c => c.PostId == postId);
         }
+        finally { _semaphore.Release(); }
     }
 
-    public IReadOnlyList<Comment> GetUserCommentsInPost(Guid userId, Guid postId)
+    public async Task<IReadOnlyList<Comment>> GetUserCommentsInPost(Guid userId, Guid postId)
     {
-        return GetAll()
-            .Where(c => c.UserId == userId && c.PostId == postId)
-            .ToList();
+        var comments = await GetAll();
+        return comments.Where(c => c.UserId == userId && c.PostId == postId)
+                       .ToList();
     }
 }

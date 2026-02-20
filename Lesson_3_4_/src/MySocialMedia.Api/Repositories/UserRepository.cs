@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MySocialMedia.Api.Entities;
+﻿using MySocialMedia.Api.Entities;
 using System.Text.Json;
 
 namespace MySocialMedia.Api.Repositories;
@@ -26,7 +25,7 @@ public class UserRepository : IUserRepository
 
     private static string Normalize(string value)
     {
-       return (value ?? string.Empty).Trim();
+        return (value ?? string.Empty).Trim();
     }
 
     private List<User> ReadFromFile_NoLock()

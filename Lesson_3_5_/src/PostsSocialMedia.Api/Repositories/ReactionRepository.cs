@@ -9,49 +9,61 @@ public class ReactionRepository : JsonRepository<Reaction>, IReactionRepository
 
     }
 
-    public int DeleteByTargetId(Guid targetId)
+    public async Task<int> DeleteByTargetId(Guid targetId)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var allReactions = ReadAll_NoLock();
+            var allReactions = await ReadAll_NoLock();
             var count = allReactions.RemoveAll(r => r.TargetId == targetId);
-            SaveAll_NoLock(allReactions);
+            if (count > 0)
+            {
+                await SaveAll_NoLock(allReactions);
+            }
             return count;
         }
+        finally { _semaphore.Release(); }
     }
 
-    public void DeleteByTargetIds(List<Guid> ids)
+    public async Task DeleteByTargetIds(List<Guid> ids)
     {
         if (ids == null || ids.Count == 0) return;
 
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var allReactions = ReadAll_NoLock();
+            var allReactions = await ReadAll_NoLock();
             var targetSet = ids.ToHashSet();
 
             int removedCount = allReactions.RemoveAll(r => targetSet.Contains(r.TargetId));
 
-            if(removedCount > 0)
+            if (removedCount > 0)
             {
-                SaveAll_NoLock(allReactions);
+                await SaveAll_NoLock(allReactions);
             }
         }
+        finally { _semaphore.Release(); }
     }
 
-    public List<Reaction> GetByTargetId(Guid targetId)
+    public async Task<List<Reaction>> GetByTargetId(Guid targetId)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            return ReadAll_NoLock().Where(r => r.TargetId == targetId).ToList() ?? new List<Reaction>();
+            var allReaction = await ReadAll_NoLock();
+            return allReaction.Where(r => r.TargetId == targetId).ToList() ?? new List<Reaction>();
         }
+        finally { _semaphore.Release(); }
     }
 
-    public Reaction? GetByUserAndTarget(Guid userId, Guid targetId)
+    public async Task<Reaction?> GetByUserAndTarget(Guid userId, Guid targetId)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var allReactions = ReadAll_NoLock();
+            var allReactions = await ReadAll_NoLock();
             return allReactions.FirstOrDefault(r => r.UserId == userId && r.TargetId == targetId);
         }
+        finally { _semaphore.Release(); }
     }
 }

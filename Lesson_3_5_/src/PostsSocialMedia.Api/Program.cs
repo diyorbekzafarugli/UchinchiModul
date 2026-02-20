@@ -1,117 +1,123 @@
-using Microsoft.AspNetCore.Authentication;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.OpenApi;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using PostsSocialMedia.Api.Mappings;
+using PostsSocialMedia.Api.Hubs;
+using PostsSocialMedia.Api.Providers;
 using PostsSocialMedia.Api.Repositories;
 using PostsSocialMedia.Api.Services;
-using Scalar.AspNetCore;
 using System.Text;
 
-namespace PostsSocialMedia.Api;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
+var jwtSettings = builder.Configuration.GetSection("JwtOptions");
+var secretKey = jwtSettings["SecretKey"]
+    ?? throw new InvalidOperationException("JwtOptions:SecretKey topilmadi!");
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+// Swagger (Swashbuckle)
+builder.Services.AddSwaggerGen(o =>
 {
-    public static void Main(string[] args)
+    o.SwaggerDoc("v1", new OpenApiInfo { Title = "Social Media API", Version = "v1" });
+
+    const string schemeId = "bearer";
+
+    o.AddSecurityDefinition(schemeId, new OpenApiSecurityScheme
     {
-        var builder = WebApplication.CreateBuilder(args);
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer {token}"
+    });
 
-        var jwtSettings = builder.Configuration.GetSection("JwtOptions");
-        var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JwtOptions:SecretKey topilmadi!");
+    // v10 da Reference ishlatilmaydi
+    o.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference(schemeId, doc)] = new List<string>()
+    });
+});
 
-        builder.Services.AddControllers();
-        builder.Services.AddScoped<IAuthService, AuthService>();
-        builder.Services.AddScoped<IUserService, UserService>();
-        builder.Services.AddScoped<IPostService, PostService>();
-        builder.Services.AddScoped<ICommentService, CommentService>();
-        builder.Services.AddScoped<IPostRepository, PostRepository>();
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+// DI
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IFollowRepository, FollowRepository>();
+builder.Services.AddScoped<IReactionRepository, ReactionRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IFollowService, FollowService>();
+builder.Services.AddScoped<IReactionService, ReactionService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+// SignalR
+builder.Services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
+builder.Services.AddSignalR();
+
+// JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
-                };
-            });
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
 
-        builder.Services.AddAuthorization();
-        builder.Services.AddAutoMapper(typeof(UserMappingProfile));
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notificationHub"))
+                    context.Token = accessToken;
 
-        // OpenAPI + Bearer scheme qo'shish (Scalar token input ko'rsatishi uchun)
-        builder.Services.AddOpenApi(options =>
-        {
-            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
-        });
+                return Task.CompletedTask;
+            }
+        };
+    });
 
-        var app = builder.Build();
+builder.Services.AddAuthorization();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
+// Mapster
+builder.Services.AddMapster();
+builder.Services.AddSingleton(TypeAdapterConfig.GlobalSettings);
+builder.Services.AddScoped<IMapper, ServiceMapper>();
 
-            app.MapScalarApiReference(o => o
-                .WithTitle("Social Media API")
-                .WithTheme(ScalarTheme.Mars)
-                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
-                // Scalar 2.x uslub:
-                .AddPreferredSecuritySchemes("Bearer") // ba'zi versiyalarda AddPreferredSecurityScheme bo'lishi mumkin
-                .AddHttpAuthentication("Bearer", auth =>
-                {
-                    auth.Token = "";                 // UI ichida kiritasiz
-                    auth.Description = "JWT Bearer";  // ixtiyoriy
-                })
-            );
-        }
+var app = builder.Build();
 
-        app.UseHttpsRedirection();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.MapControllers();
-        app.Run();
-    }
-}
-
-// .NET 10 uslubidagi transformer (OpenApiSecuritySchemeReference bilan)
-internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvider schemeProvider)
-    : IOpenApiDocumentTransformer
+if (app.Environment.IsDevelopment())
 {
-    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken ct)
+    app.UseSwagger(); // /swagger/v1/swagger.json
+
+    app.UseSwaggerUI(c =>
     {
-        var schemes = await schemeProvider.GetAllSchemesAsync();
-        if (!schemes.Any(s => s.Name == JwtBearerDefaults.AuthenticationScheme || s.Name == "Bearer"))
-            return;
-
-        var bearer = new OpenApiSecurityScheme
-        {
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme."
-        };
-
-        document.Components ??= new OpenApiComponents();
-        document.AddComponent("Bearer", bearer);
-
-        var requirement = new OpenApiSecurityRequirement
-        {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
-        };
-
-        foreach (var op in document.Paths.Values.SelectMany(p => p.Operations!.Values))
-        {
-            op.Security ??= new List<OpenApiSecurityRequirement>();
-            op.Security.Add(requirement);
-        }
-    }
+        c.RoutePrefix = "swagger"; // /swagger
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Social Media API v1"); // ✅ absolute
+    });
 }
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapHub<NotificationHub>("/notificationHub");
+
+app.Run();

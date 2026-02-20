@@ -4,13 +4,13 @@ namespace PostsSocialMedia.Api.Repositories;
 
 public interface IReactionRepository
 {
-    void Add(Reaction reaction);
-    Reaction? GetById(Guid id);
-    IReadOnlyList<Reaction> GetAll();
-    bool Update(Reaction reactionUpdated);
-    Reaction? GetByUserAndTarget(Guid userId, Guid targetId);
-    List<Reaction> GetByTargetId(Guid targetId);
-    int DeleteByTargetId(Guid targetId);
-    void DeleteByTargetIds(List<Guid> ids);
-    bool Delete(Guid id);
+    Task Add(Reaction reaction);
+    Task<Reaction?> GetById(Guid id);
+    Task<IReadOnlyList<Reaction>> GetAll();
+    Task Update(Reaction reactionUpdated);
+    Task<Reaction?> GetByUserAndTarget(Guid userId, Guid targetId);
+    Task<List<Reaction>> GetByTargetId(Guid targetId);
+    Task<int> DeleteByTargetId(Guid targetId);
+    Task DeleteByTargetIds(List<Guid> ids);
+    Task Delete(Guid id);
 }

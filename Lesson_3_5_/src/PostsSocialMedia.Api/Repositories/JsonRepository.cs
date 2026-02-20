@@ -1,102 +1,123 @@
 ﻿using PostsSocialMedia.Api.Entities;
+using PostsSocialMedia.Api.Repositories;
 using System.Text.Json;
-
-namespace PostsSocialMedia.Api.Repositories;
 
 public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
 {
     private readonly string _filePath;
-
-    protected static readonly object _fileLock = new();
-
+    // Lock o'rniga SemaphoreSlim ishlatamiz, chunki lock ichida 'await' ishlatib bo'lmaydi
+    protected static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public JsonRepository(string fileName)
     {
         var directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
         Directory.CreateDirectory(directoryPath);
-
         _filePath = Path.Combine(directoryPath, $"{fileName}.json");
 
         if (!File.Exists(_filePath)) File.WriteAllText(_filePath, "[]");
     }
 
-    protected void SaveAll_NoLock(List<T> items)
-    {
-        var json = JsonSerializer.Serialize(items, _jsonOptions);
-        var dir = Path.GetDirectoryName(_filePath)!;
-        var tempPath = Path.Combine(dir, $"{Path.GetFileNameWithoutExtension(_filePath)}_{Guid.NewGuid():N}.tmp");
-
-        File.WriteAllText(tempPath, json);
-        File.Move(tempPath, _filePath, overwrite: true);
-    }
-
-    protected List<T> ReadAll_NoLock()
+    // Asinxron o'qish
+    protected async Task<List<T>> ReadAll_NoLock()
     {
         try
         {
-            var json = File.ReadAllText(_filePath);
+            var json = await File.ReadAllTextAsync(_filePath);
             return JsonSerializer.Deserialize<List<T>>(json) ?? new List<T>();
         }
-        catch
+        catch { return new List<T>(); }
+    }
+
+    // Asinxron yozish
+    protected async Task SaveAll_NoLock(List<T> items)
+    {
+        var json = JsonSerializer.Serialize(items, _jsonOptions);
+        var dir = Path.GetDirectoryName(_filePath)!;
+
+        // Vaqtinchalik fayl nomi (sizning mantiqingiz bo'yicha)
+        var tempPath = Path.Combine(dir, $"{Path.GetFileNameWithoutExtension(_filePath)}_{Guid.NewGuid():N}.tmp");
+
+        try
         {
-            return new List<T>();
+            // 1. Ma'lumotni oldin vaqtinchalik faylga asinxron yozamiz
+            await File.WriteAllTextAsync(tempPath, json);
+
+            // 2. Agar hammasi muvaffaqiyatli bo'lsa, uni asosiy faylga almashtiramiz
+            // Bu operatsiya operatsion tizim darajasida juda tez va xavfsiz bajariladi
+            File.Move(tempPath, _filePath, overwrite: true);
+        }
+        catch (Exception)
+        {
+            // Agar xato bo'lsa, vaqtinchalik faylni o'chirib tashlaymiz
+            if (File.Exists(tempPath)) File.Delete(tempPath);
+            throw; // Xatoni yuqoriga uzatamiz
         }
     }
 
-    public void Add(T item)
+    public async Task Add(T item)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync(); // Faylni band qilamiz
+        try
         {
-            var items = ReadAll_NoLock();
+            var items = await ReadAll_NoLock();
             items.Add(item);
-            SaveAll_NoLock(items);
+            await SaveAll_NoLock(items);
         }
+        finally { _semaphore.Release(); } // Faylni bo'shatamiz
     }
 
-    public T? GetById(Guid id)
+    public async Task<T?> GetById(Guid id)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            return ReadAll_NoLock().SingleOrDefault(x => x.Id == id);
+            var items = await ReadAll_NoLock();
+            return items.SingleOrDefault(x => x.Id == id);
         }
+        finally { _semaphore.Release(); }
     }
 
-    public IReadOnlyList<T> GetAll()
+    public async Task<IReadOnlyList<T>> GetAll()
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            return ReadAll_NoLock().AsReadOnly();
+            var items = await ReadAll_NoLock();
+            return items.AsReadOnly();
         }
+        finally { _semaphore.Release(); }
     }
 
-    public bool Delete(Guid id)
+    public async Task Update(T updatedItem)
     {
-        lock (_fileLock)
+        await _semaphore.WaitAsync();
+        try
         {
-            var items = ReadAll_NoLock();
-            var removedCount = items.RemoveAll(x => x.Id == id);
-            if (removedCount > 0)
-            {
-                SaveAll_NoLock(items);
-                return true;
-            }
-            return false;
-        }
-    }
-
-    public bool Update(T updatedItem)
-    {
-        lock (_fileLock)
-        {
-            var items = ReadAll_NoLock();
+            var items = await ReadAll_NoLock();
             var index = items.FindIndex(x => x.Id == updatedItem.Id);
-
-            if (index == -1) return false;
-
-            items[index] = updatedItem;
-            SaveAll_NoLock(items);
-            return true;
+            if (index != -1)
+            {
+                items[index] = updatedItem;
+                await SaveAll_NoLock(items);
+            }
         }
+        finally { _semaphore.Release(); }
+    }
+
+    public async Task Delete(Guid id)
+    {
+        await _semaphore.WaitAsync();
+        try
+        {
+            var items = await ReadAll_NoLock();
+            var item = items.SingleOrDefault(x => x.Id == id);
+            if (item != null)
+            {
+                items.Remove(item);
+                await SaveAll_NoLock(items);
+            }
+        }
+        finally { _semaphore.Release(); }
     }
 }

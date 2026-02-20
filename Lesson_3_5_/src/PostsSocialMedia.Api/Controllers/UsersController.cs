@@ -16,9 +16,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
-        var result = _userService.GetById(id);
+        var result = await _userService.GetByIdAsync(id);
 
         if (!result.Success) return BadRequest(result.Error);
 
@@ -26,43 +26,43 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("update")]
-    public IActionResult Update(UserUpdateDto userUpdateDto)
+    public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _userService.Update(currentUserId, userUpdateDto);
+        var result = await _userService.UpdateAsync(currentUserId, userUpdateDto);
         if (!result.Success) return BadRequest(result.Error);
 
         return Ok("Profil muvaffaqiyatli yangilandi");
     }
 
     [HttpGet("search")]
-    public IActionResult Search([FromQuery] string userTerm, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> Search([FromQuery] string userTerm, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
-        var result = _userService.Search(userTerm, page, pageSize);
+        var result = await _userService.SearchAsync(userTerm, page, pageSize);
         if (!result.Success) return BadRequest(result.Error);
 
         return Ok(result.Data);
     }
 
     [HttpDelete("{id:guid}")]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var currentUserId = GetUserIdFromToken();
 
         if (id != currentUserId) return Forbid("Siz faqat o'z profilingizni o'chira olasiz");
 
-        var result = _userService.Delete(id);
+        var result = await _userService.DeleteAsync(id);
         if (!result.Success) return BadRequest(result.Error);
 
         return Ok("Foydalanuvchi o'chirildi");
     }
 
     [HttpGet("by-user-name")]
-    public IActionResult GetByUserName(string userName)
+    public async Task<IActionResult> GetByUserName(string userName)
     {
-        var result = _userService.GetByUserName(userName);
+        var result = await _userService.GetByUserNameAsync(userName);
         if (!result.Success) return BadRequest(result.Error);
 
         return Ok(result.Data);

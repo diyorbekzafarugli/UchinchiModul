@@ -18,64 +18,64 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Add(CommentAddDto commentAddDto)
+    public async Task<IActionResult> Add(CommentAddDto commentAddDto)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.Add(currentUserId, commentAddDto);
+        var result = await _commentService.Add(currentUserId, commentAddDto);
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
 
     [HttpGet("get-by-id")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.GetById(currentUserId, id);
+        var result = await _commentService.GetById(currentUserId, id);
         if (result is null) return NotFound();
 
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
 
     [HttpGet("get-all")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.GetAll(currentUserId);
+        var result = await _commentService.GetAll(currentUserId);
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
 
     [HttpDelete]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.Delete(currentUserId, id);
+        var result = await _commentService.Delete(currentUserId, id);
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
 
     [HttpGet("get-all-by-post-id")]
-    public IActionResult GetAlByPostId(Guid id)
+    public async Task<IActionResult> GetAlByPostId(Guid id)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.GetByPostId(currentUserId, id);
+        var result = await _commentService.GetByPostId(currentUserId, id);
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
 
     [HttpGet("get-user-comments-in-post")]
-    public IActionResult GetUserCommentsInPost(Guid postId)
+    public async Task<IActionResult> GetUserCommentsInPost(Guid postId)
     {
         var currentUserId = GetUserIdFromToken();
         if (currentUserId == Guid.Empty) return Unauthorized();
 
-        var result = _commentService.GetUserCommentsInPost(currentUserId, postId);
+        var result = await _commentService.GetUserCommentsInPost(currentUserId, postId);
         return result.Success ? Ok(result.Data) : BadRequest(result.Error);
     }
     private Guid GetUserIdFromToken()

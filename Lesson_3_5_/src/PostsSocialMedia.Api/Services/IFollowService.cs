@@ -5,9 +5,13 @@ namespace PostsSocialMedia.Api.Services;
 
 public interface IFollowService
 {
-    Result<Guid> Add(Guid currentUserId, FollowAddDto followAddDto);
-    Result<FollowGetDto> GetById(Guid currentUserId, Guid id);
-    Result<List<FollowGetDto>> GetUsersByName(Guid currentUserId, string searchTerm, int page, int pageSize);
-    Result<List<FollowGetDto>> GetAll(Guid currentUserId);
-    Result<bool> Delete(Guid currentUserId, Guid id);
+    Task<Result<Guid>> Add(Guid currentUserId, FollowAddDto followAddDto);
+
+    Task<Result<FollowGetDto>> GetById(Guid currentUserId, Guid id);
+
+    Task<Result<List<FollowGetDto>>> GetUsersByName(Guid currentUserId, string searchTerm, int page, int pageSize);
+
+    Task<Result<List<FollowGetDto>>> GetAll(Guid currentUserId);
+
+    Task<Result<bool>> Delete(Guid currentUserId, Guid id);
 }
