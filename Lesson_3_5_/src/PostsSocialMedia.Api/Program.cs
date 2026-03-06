@@ -36,7 +36,6 @@ builder.Services.AddSwaggerGen(o =>
         Description = "Bearer {token}"
     });
 
-    // v10 da Reference ishlatilmaydi
     o.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
     {
         [new OpenApiSecuritySchemeReference(schemeId, doc)] = new List<string>()
