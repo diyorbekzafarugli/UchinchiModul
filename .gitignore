@@ -70,11 +70,5 @@ yarn-debug.log
 *.bak
 *.old
 *.orig
-# Data jsonlar (saqlayotgan ma'lumotlaringiz)
-Data/**/*.json
 
-# appsettings ichida secret bo'lishi mumkin — ignore qilamiz
-appsettings*.json
-
-# Lekin template (secret yo'q) faylni commit qilamiz
-!appsettings.example.json
+.env 
