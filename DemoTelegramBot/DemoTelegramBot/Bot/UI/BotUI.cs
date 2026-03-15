@@ -346,7 +346,6 @@ public sealed class BotUi
 
     private static bool IsAdminToken(dynamic? token)
     {
-        // Token.Role enum bo‘lsa shu ishlaydi: "Admin"/"SuperAdmin"
         if (token is null) return false;
         var role = token.Role?.ToString();
         return role is "Admin" or "SuperAdmin";

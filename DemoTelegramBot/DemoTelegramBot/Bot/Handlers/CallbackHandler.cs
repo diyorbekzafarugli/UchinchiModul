@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DemoTelegramBot.Bot.Core;
+﻿using DemoTelegramBot.Bot.Core;
 using DemoTelegramBot.Bot.UI;
 using DemoTelegramBot.Repositories;
 using DemoTelegramBot.Services;

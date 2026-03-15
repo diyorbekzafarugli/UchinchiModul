@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DemoTelegramBot.Bot.Core;
+﻿using DemoTelegramBot.Bot.Core;
 using DemoTelegramBot.Bot.Handlers;
 using DemoTelegramBot.Bot.UI;
 using DemoTelegramBot.Repositories;
 using DemoTelegramBot.Services;
+using DotNetEnv;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
@@ -16,6 +14,8 @@ internal class Program
 {
     static async Task Main()
     {
+        Env.Load();
+
         var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
         if (string.IsNullOrWhiteSpace(token))
         {
@@ -23,35 +23,28 @@ internal class Program
             return;
         }
 
-        // 1) Bot client
         ITelegramBotClient botClient = new TelegramBotClient(token);
 
-        // 2) Repositories
         IUserRepository userRepo = new UserRepository();
         IPostRepository postRepo = new PostRepository();
         IUserService userService = new UserService(userRepo);
 
-        // 3) Context (sessions)
         var ctx = new BotContext();
 
-        // 4) Services
         IAuthService authService = new AuthService(userRepo);
-        IPostService postService = new PostService(postRepo, userService);   // <-- sening IPostService implementation
-        var adminService = new AdminService(userRepo);          // <-- AdminService class
+        IPostService postService = new PostService(postRepo, userService);
+        var adminService = new AdminService(userRepo);
 
-        // 5) UI
         var ui = new BotUi(ctx, authService, userRepo, postRepo);
 
-        // 6) Handlers
         IMessageHandler messageHandler = new MessageHandler(ctx, authService, postService, adminService, ui);
         ICallbackHandler callbackHandler = new CallbackHandler(ctx, ui, authService, userRepo, postRepo);
 
         DemoTelegramBot.Bot.Handlers.IUpdateHandler updateHandler =
-    new DemoTelegramBot.Bot.Handlers.UpdateHandler(messageHandler, callbackHandler);
+        new DemoTelegramBot.Bot.Handlers.UpdateHandler(messageHandler, callbackHandler);
 
         IErrorHandler errorHandler = new ErrorHandler();
 
-        // 7) Polling
         using var cts = new CancellationTokenSource();
         Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); };
 

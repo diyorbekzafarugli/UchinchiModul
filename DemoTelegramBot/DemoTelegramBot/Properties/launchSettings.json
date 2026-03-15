@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DemoTelegramBot": {
+      "commandName": "Project",
+      "environmentVariables": {
+      }
+    }
+  }
+}
