@@ -71,4 +71,5 @@ yarn-debug.log
 *.old
 *.orig
 
+appsettings.*.json
 .env 
