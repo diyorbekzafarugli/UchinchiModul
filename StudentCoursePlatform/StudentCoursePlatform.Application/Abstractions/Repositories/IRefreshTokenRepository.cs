@@ -1,11 +1,11 @@
-﻿using StudentCoursePlatform.Domain.Entities;
-
-namespace StudentCoursePlatform.Application.Abstractions.Repositories;
+﻿namespace StudentCoursePlatform.Application.Abstractions.Repositories;
 
 public interface IRefreshTokenRepository
 {
-    Task AddAsync(RefreshToken refreshToken);
-    Task<RefreshToken?> GetByTokenHashAsync(string tokenHash);
-    Task RevokeAsync(RefreshToken token);
-    Task<IEnumerable<RefreshToken>> GetAllByUserIdAsync(Guid userId);
+    Task AddAsync(RefreshToken refreshToken, CancellationToken cancellationToken);
+    Task UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken);
+    Task<RefreshToken?> GetByTokenHashAsync(string tokenHash, CancellationToken cancellationToken);
+    Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+    Task UpdateRangeAsync(IReadOnlyList<RefreshToken> tokens, CancellationToken cancellationToken);
+    Task DeleteOldTokensAsync(DateTime cutoffDate);
 }

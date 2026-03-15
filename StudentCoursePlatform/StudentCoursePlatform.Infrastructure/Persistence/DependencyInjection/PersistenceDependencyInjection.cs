@@ -25,6 +25,7 @@ public static class PersistenceDependencyInjection
         services.AddScoped<IHomeworkSubmissionRepository, HomeworkSubmissionRepository>();
         services.AddScoped<IQuizRepository, QuizRepository>();
         services.AddScoped<IAnswerOptionRepository, AnswerOptionRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
         return services;
     }

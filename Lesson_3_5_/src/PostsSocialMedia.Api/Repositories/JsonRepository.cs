@@ -6,7 +6,7 @@ public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
 {
     private readonly string _filePath;
     protected static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions _options = new() { WriteIndented = true };
 
     public JsonRepository(string fileName)
     {
@@ -29,7 +29,7 @@ public class JsonRepository<T> : IJsonRepository<T> where T : class, IEntity
 
     protected async Task SaveAll_NoLock(List<T> items)
     {
-        var json = JsonSerializer.Serialize(items, _jsonOptions);
+        var json = JsonSerializer.Serialize(items, _options);
         var dir = Path.GetDirectoryName(_filePath)!;
 
         var tempPath = Path.Combine(dir, $"{Path.GetFileNameWithoutExtension(_filePath)}_{Guid.NewGuid():N}.tmp");

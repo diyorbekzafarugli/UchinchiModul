@@ -15,15 +15,17 @@ public class HomeworkSubmissionRepository : GenericRepository<HomeworkSubmission
     {
     }
 
-    public async Task<HomeworkSubmission?> GetByHomeworkIdAsync(Guid homeworkId)
+    public async Task<HomeworkSubmission?> GetByHomeworkIdAsync(Guid homeworkId,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.HomeworkSubmissions
-            .FirstOrDefaultAsync(h => h.HomeworkId == homeworkId);
+            .FirstOrDefaultAsync(h => h.HomeworkId == homeworkId, cancellationToken);
     }
 
-    public async Task<HomeworkSubmission?> GetByStudentIdAsync(Guid studentId)
+    public async Task<HomeworkSubmission?> GetByStudentIdAsync(Guid studentId,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.HomeworkSubmissions
-            .FirstOrDefaultAsync(h => h.StudentId == studentId);
+            .FirstOrDefaultAsync(h => h.StudentId == studentId, cancellationToken);
     }
 }

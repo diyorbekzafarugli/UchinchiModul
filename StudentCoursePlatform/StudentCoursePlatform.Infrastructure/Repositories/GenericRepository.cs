@@ -12,35 +12,35 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IEnti
     {
         _dbContext = appDbContext;
     }
-    public async Task AddAsync(T entity)
+    public async Task AddAsync(T entity, CancellationToken cancellationToken)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Set<T>().AddAsync(entity, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(T entity)
+    public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
     {
         _dbContext.Set<T>().Remove(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<T>> GetAllAsync(int page, int pageSize)
+    public async Task<List<T>> GetAllAsync(int page, int pageSize, CancellationToken cancellationToken)
     {
         return await _dbContext.Set<T>()
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _dbContext.Set<T>()
-            .FindAsync(id);
+            .FindAsync(id, cancellationToken);
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
     {
-        _dbContext.Set<T>().Update(entity);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Entry(entity).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

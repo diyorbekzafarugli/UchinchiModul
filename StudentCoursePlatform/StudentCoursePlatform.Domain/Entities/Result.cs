@@ -2,25 +2,25 @@
 
 public class Result<T>
 {
-    public bool Success { get; set; }
-    public string? Error { get; set; }
-    public T? Data { get; set; }
+    public bool IsSuccess { get;private set; }
+    public string[] Errors { get;private set; } = [];
+    public T? Data { get;private set; }
 
-    public static Result<T> Ok(T data)
+    public static Result<T> Success(T data)
     {
         return new Result<T>
         {
-            Success = true,
+            IsSuccess = true,
             Data = data
         };
     }
 
-    public static Result<T> Fail(string error)
+    public static Result<T> Fail(params string[] errors)
     {
         return new Result<T>
         {
-            Success = false,
-            Error = error
+            IsSuccess = false,
+            Errors = errors
         };
 
     }

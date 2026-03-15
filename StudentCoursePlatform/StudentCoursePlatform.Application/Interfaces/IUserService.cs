@@ -1,16 +1,17 @@
-﻿using StudentCoursePlatform.Application.DTOs.Users;
+﻿using StudentCoursePlatform.Application.Common;
+using StudentCoursePlatform.Application.DTOs.Users.Requests;
+using StudentCoursePlatform.Application.DTOs.Users.Responses;
 using StudentCoursePlatform.Domain.Entities;
 
 namespace StudentCoursePlatform.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<Result<UserResponseDto>> CreateAsync(UserCreateDto userCreateDto);
-
-    Task<Result<UserResponseDto?>> GetByIdAsync(Guid id);
-    Task<Result<UserResponseDto?>> GetByEmailAsync(string email);
-    Task<Result<List<UserResponseDto>>> GetAllAsync(int page, int pageSize);
-    Task<Result<bool>> ChangePasswordAsync(ChangePasswordDto changePasswordDto);
-    Task<Result<bool>> UpdateAsync(Guid userId, UserUpdateDto userUpdateDto);
-    Task<Result<bool>> DeleteAsync(Guid id);
+    Task<Result<UserResponseDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<Result<List<UserResponseDto>>> GetAllAsync(PaginationParams pagination, CancellationToken cancellationToken);
+    Task<Result<UserResponseDto>> CreateAsync(UserCreateDto dto, CancellationToken cancellationToken);
+    Task<Result<bool>> UpdateAsync(UserUpdateDto dto, CancellationToken cancellationToken);
+    Task<Result<bool>> ChangePasswordAsync(ChangePasswordDto dto, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAccountAsync(CancellationToken cancellationToken);
 }

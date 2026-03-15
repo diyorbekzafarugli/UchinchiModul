@@ -11,9 +11,9 @@ public class QuizRepository : GenericRepository<Quiz>, IQuizRepository
     {
     }
 
-    public async Task<Quiz?> GetQuizByCourseId(Guid courseId)
+    public async Task<Quiz?> GetQuizByCourseId(Guid courseId, CancellationToken cancellationToken)
     {
         return await _dbContext.Quizzes
-            .FirstOrDefaultAsync(q => q.CourseId == courseId);
+            .FirstOrDefaultAsync(q => q.CourseId == courseId, cancellationToken);
     }
 }

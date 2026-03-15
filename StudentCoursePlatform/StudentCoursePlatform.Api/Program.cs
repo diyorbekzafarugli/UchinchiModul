@@ -1,32 +1,43 @@
-using Microsoft.EntityFrameworkCore;
-using StudentCoursePlatform.Infrastructure.Persistence;
+using Serilog;
+using StudentCoursePlatform.Api.Extensions;
+using StudentCoursePlatform.Api.Middlewares;
+using StudentCoursePlatform.Application.DependencyInjection;
 using StudentCoursePlatform.Infrastructure.Persistence.DependencyInjection;
+using StudentCoursePlatform.Infrastructure.Security.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+builder.Host.UseSerilog((context, _, configuration) =>
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .WriteTo.Console()
+        .WriteTo.File("Logs/app-.log", rollingInterval: RollingInterval.Day));
 
-
+builder.Services.AddControllers();
+builder.Services.AddLocalization();
+builder.Services.AddSwagger();
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddCorsPolicy();
+builder.Services.AddValidators();
+builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddSecurity();
+builder.Services.AddHostedService<TokenCleanupService>();
+
 var app = builder.Build();
 
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+app.UseCors();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+app.UseMiddleware<TokenBlacklistMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
-
-
-app.MapGet("/weatherforecast", () =>
-{
-})
-.WithName("GetWeatherForecast");
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

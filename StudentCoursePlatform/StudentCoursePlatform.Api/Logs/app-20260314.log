@@ -1,0 +1,481 @@
+2026-03-14 11:02:11.576 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:02:12.499 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:02:12.501 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:02:12.580 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:02:12.581 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:02:12.587 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:02:13.577 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:02:13.910 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 343.5712ms
+2026-03-14 11:02:13.944 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:02:13.959 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:02:13.959 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:02:13.959 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:02:13.971 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 12.0591ms
+2026-03-14 11:02:13.959 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:02:13.959 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:02:13.986 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:02:14.005 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 46.2735ms
+2026-03-14 11:02:14.005 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 45.6761ms
+2026-03-14 11:02:14.005 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 46.2804ms
+2026-03-14 11:02:14.005 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 60.6145ms
+2026-03-14 11:02:14.031 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 72.4179ms
+2026-03-14 11:02:14.129 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 142.3504ms
+2026-03-14 11:02:14.171 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:02:14.318 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 147.331ms
+2026-03-14 11:02:14.753 +05:00 [INF] Executed DbCommand (76ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:02:51.211 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:02:51.213 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:02:51.221 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 10.1723ms
+2026-03-14 11:02:51.219 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/.well-known/appspecific/com.chrome.devtools.json - null null
+2026-03-14 11:02:51.226 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 13.2574ms
+2026-03-14 11:02:52.167 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/.well-known/appspecific/com.chrome.devtools.json - 404 0 null 947.976ms
+2026-03-14 11:02:52.172 +05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7222/.well-known/appspecific/com.chrome.devtools.json, Response status code: 404
+2026-03-14 11:03:25.451 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/auth/login - application/json 73
+2026-03-14 11:03:25.459 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:03:25.460 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:03:25.469 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:03:25.501 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserLoginDto) on controller StudentCoursePlatform.Api.Controllers.AuthController (StudentCoursePlatform.Api).
+2026-03-14 11:03:25.597 +05:00 [INF] Authenticating user boriboyev97@mail.ru
+2026-03-14 11:03:25.758 +05:00 [INF] Executed DbCommand (18ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Email" = @email
+LIMIT 1
+2026-03-14 11:03:26.092 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = DateTime), @p6='?', @p7='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpireAt", "IsRevoked", "ReplacedByToken", "RevokedAt", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-03-14 11:03:26.105 +05:00 [INF] User boriboyev97@mail.ru authenticated successfully
+2026-03-14 11:03:26.114 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.LoginResponseDto'.
+2026-03-14 11:03:26.138 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api) in 630.839ms
+2026-03-14 11:03:26.140 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:03:26.149 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/auth/login - 200 null application/json; charset=utf-8 698.7324ms
+2026-03-14 11:04:41.525 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/api/users?page=1&pageSize=20 - null null
+2026-03-14 11:04:41.568 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenMalformedException: IDX14121: JWT is not a well formed JWE, there must be four dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken.ReadToken(ReadOnlyMemory`1 encodedTokenMemory)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebToken..ctor(String jwtEncodedString)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ReadToken(String token, TokenValidationParameters validationParameters)
+2026-03-14 11:04:41.584 +05:00 [INF] Bearer was not authenticated. Failure message: IDX14121: JWT is not a well formed JWE, there must be four dots (.).
+The token needs to be in JWS or JWE Compact Serialization Format. (JWS): 'EncodedHeader.EncodedPayload.EncodedSignature'. (JWE): 'EncodedProtectedHeader.EncodedEncryptedKey.EncodedInitializationVector.EncodedCiphertext.EncodedAuthenticationTag'.
+2026-03-14 11:04:41.591 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-03-14 11:04:41.597 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-14 11:04:41.598 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/api/users?page=1&pageSize=20 - 401 0 null 73.116ms
+2026-03-14 11:05:27.649 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/api/users?page=1&pageSize=20 - null null
+2026-03-14 11:05:27.679 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:03:25 AM', Current time (UTC): '3/14/2026 6:05:27 AM'.
+   at Microsoft.IdentityModel.Tokens.ValidatorUtilities.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-03-14 11:05:27.681 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:03:25 AM', Current time (UTC): '3/14/2026 6:05:27 AM'.
+2026-03-14 11:05:27.682 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-03-14 11:05:27.683 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-14 11:05:27.684 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/api/users?page=1&pageSize=20 - 401 0 null 35.4169ms
+2026-03-14 11:16:43.217 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:16:43.467 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:16:43.468 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:16:43.521 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:16:43.522 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:16:43.523 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:16:43.943 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:16:44.269 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 333.3557ms
+2026-03-14 11:16:44.291 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:16:44.292 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:16:44.292 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:16:44.297 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:16:44.315 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 22.0546ms
+2026-03-14 11:16:44.291 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:16:44.291 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:16:44.320 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:16:44.345 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 53.5743ms
+2026-03-14 11:16:44.345 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 54.5341ms
+2026-03-14 11:16:44.345 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 54.547ms
+2026-03-14 11:16:44.345 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 54.0286ms
+2026-03-14 11:16:44.346 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 49.0467ms
+2026-03-14 11:16:44.399 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 79.2638ms
+2026-03-14 11:16:44.459 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:16:44.605 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 146.232ms
+2026-03-14 11:16:44.913 +05:00 [INF] Executed DbCommand (66ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:17:48.006 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/auth/login - application/json 73
+2026-03-14 11:17:48.013 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:17:48.014 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:17:48.058 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:17:48.079 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserLoginDto) on controller StudentCoursePlatform.Api.Controllers.AuthController (StudentCoursePlatform.Api).
+2026-03-14 11:17:48.131 +05:00 [INF] Authenticating user boriboyev97@mail.ru
+2026-03-14 11:17:48.256 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Email" = @email
+LIMIT 1
+2026-03-14 11:17:48.494 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = DateTime), @p6='?', @p7='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpireAt", "IsRevoked", "ReplacedByToken", "RevokedAt", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-03-14 11:17:48.506 +05:00 [INF] User boriboyev97@mail.ru authenticated successfully
+2026-03-14 11:17:48.514 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.LoginResponseDto'.
+2026-03-14 11:17:48.532 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api) in 448.6578ms
+2026-03-14 11:17:48.534 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:17:48.542 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/auth/login - 200 null application/json; charset=utf-8 536.1916ms
+2026-03-14 11:20:33.055 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/cources - application/json 151
+2026-03-14 11:20:33.060 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:20:33.061 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:20:33.098 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:17:48 AM', Current time (UTC): '3/14/2026 6:20:33 AM'.
+   at Microsoft.IdentityModel.Tokens.ValidatorUtilities.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-03-14 11:20:33.108 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:17:48 AM', Current time (UTC): '3/14/2026 6:20:33 AM'.
+2026-03-14 11:20:33.115 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Teacher)
+2026-03-14 11:20:33.123 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-14 11:20:33.124 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/cources - 401 0 null 68.3429ms
+2026-03-14 11:21:32.894 +05:00 [INF] Request starting HTTP/2 DELETE https://localhost:7222/api/users/user?id=3fa85f64-5717-4562-b3fc-2c963f66afa6 - null null
+2026-03-14 11:21:32.898 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:21:32.898 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:21:32.904 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:17:48 AM', Current time (UTC): '3/14/2026 6:21:32 AM'.
+   at Microsoft.IdentityModel.Tokens.ValidatorUtilities.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-03-14 11:21:32.906 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/14/2026 6:17:48 AM', Current time (UTC): '3/14/2026 6:21:32 AM'.
+2026-03-14 11:21:32.907 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-03-14 11:21:32.909 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-14 11:21:32.910 +05:00 [INF] Request finished HTTP/2 DELETE https://localhost:7222/api/users/user?id=3fa85f64-5717-4562-b3fc-2c963f66afa6 - 401 0 null 15.4856ms
+2026-03-14 11:25:31.114 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:25:31.286 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:25:31.287 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:25:31.317 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:25:31.319 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:25:31.319 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:25:31.516 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:25:31.675 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 160.0577ms
+2026-03-14 11:25:31.694 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:25:31.694 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:25:31.694 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:25:31.694 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:25:31.695 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:25:31.695 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:25:31.704 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 9.2808ms
+2026-03-14 11:25:31.716 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 21.0283ms
+2026-03-14 11:25:31.716 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 21.0271ms
+2026-03-14 11:25:31.716 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 20.993ms
+2026-03-14 11:25:31.716 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 20.6525ms
+2026-03-14 11:25:31.718 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 22.8753ms
+2026-03-14 11:25:31.724 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:25:31.765 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 41.3918ms
+2026-03-14 11:25:31.819 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:25:31.941 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 121.8038ms
+2026-03-14 11:25:32.397 +05:00 [INF] Executed DbCommand (47ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:25:47.809 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/debug/time - null null
+2026-03-14 11:25:47.832 +05:00 [INF] Executing endpoint 'HTTP: GET /debug/time'
+2026-03-14 11:25:47.835 +05:00 [INF] Executed endpoint 'HTTP: GET /debug/time'
+2026-03-14 11:25:47.836 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/debug/time - 200 null application/json; charset=utf-8 26.9908ms
+2026-03-14 11:36:13.993 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:36:14.640 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:36:14.642 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:36:14.703 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:36:14.703 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:36:14.704 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:36:15.145 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:36:15.358 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 220.3452ms
+2026-03-14 11:36:15.379 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:36:15.379 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:36:15.379 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:36:15.379 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:36:15.379 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:36:15.428 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:36:15.497 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:36:15.595 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 216.1777ms
+2026-03-14 11:36:15.596 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 191.8206ms
+2026-03-14 11:36:15.606 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 226.9972ms
+2026-03-14 11:36:15.646 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 266.7861ms
+2026-03-14 11:36:15.647 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 181.8162ms
+2026-03-14 11:36:15.669 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 290.1246ms
+2026-03-14 11:36:16.096 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 717.0668ms
+2026-03-14 11:36:16.158 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:36:16.516 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 358.5731ms
+2026-03-14 11:36:17.278 +05:00 [INF] Executed DbCommand (66ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:36:58.688 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:36:59.089 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:36:59.092 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:36:59.207 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:36:59.208 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:36:59.209 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:36:59.428 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:36:59.695 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 276.3615ms
+2026-03-14 11:36:59.710 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:36:59.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:36:59.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:36:59.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:36:59.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:36:59.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:36:59.736 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 25.2785ms
+2026-03-14 11:36:59.730 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:36:59.761 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 49.8957ms
+2026-03-14 11:36:59.766 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 56.5038ms
+2026-03-14 11:36:59.766 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 55.6587ms
+2026-03-14 11:36:59.766 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 55.5996ms
+2026-03-14 11:36:59.766 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 55.6159ms
+2026-03-14 11:36:59.809 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 79.8384ms
+2026-03-14 11:36:59.844 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:36:59.970 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 125.9509ms
+2026-03-14 11:37:00.505 +05:00 [INF] Executed DbCommand (53ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:37:33.871 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/auth/login - application/json 73
+2026-03-14 11:37:33.878 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:37:33.879 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:37:34.762 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:37:34.783 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserLoginDto) on controller StudentCoursePlatform.Api.Controllers.AuthController (StudentCoursePlatform.Api).
+2026-03-14 11:37:34.870 +05:00 [INF] Authenticating user boriboyev97@mail.ru
+2026-03-14 11:37:35.008 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Email" = @email
+LIMIT 1
+2026-03-14 11:37:35.307 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = DateTime), @p6='?', @p7='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpireAt", "IsRevoked", "ReplacedByToken", "RevokedAt", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-03-14 11:37:35.318 +05:00 [INF] User boriboyev97@mail.ru authenticated successfully
+2026-03-14 11:37:35.328 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.LoginResponseDto'.
+2026-03-14 11:37:35.348 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api) in 560.7645ms
+2026-03-14 11:37:35.350 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:37:35.358 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/auth/login - 200 null application/json; charset=utf-8 1487.0518ms
+2026-03-14 11:38:57.429 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/api/users/71f6d75c-dcef-42e5-9eb7-dd65c16db39c - null null
+2026-03-14 11:38:57.482 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:38:57.490 +05:00 [INF] Route matched with {action = "GetById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetByIdAsync(System.Guid) on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:38:57.563 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Id" = @p
+LIMIT 1
+2026-03-14 11:38:57.565 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.UserResponseDto'.
+2026-03-14 11:38:57.567 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api) in 75.3282ms
+2026-03-14 11:38:57.568 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:38:57.568 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/api/users/71f6d75c-dcef-42e5-9eb7-dd65c16db39c - 200 null application/json; charset=utf-8 139.3521ms
+2026-03-14 11:39:21.865 +05:00 [INF] Request starting HTTP/2 DELETE https://localhost:7222/api/users/account - null null
+2026-03-14 11:39:21.868 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:39:21.868 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:39:21.873 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:39:21.880 +05:00 [INF] Route matched with {action = "DeleteAccount", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteAccountAsync() on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:39:51.836 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api) in 29954.8825ms
+2026-03-14 11:39:51.840 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:40:04.009 +05:00 [ERR] Unhandled exception: User id not found in token
+System.UnauthorizedAccessException: User id not found in token
+   at StudentCoursePlatform.Infrastructure.Security.CurrentUserService.get_UserId() in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Infrastructure\Security\CurrentUserService.cs:line 22
+   at StudentCoursePlatform.Application.Services.UserService.DeleteAccountAsync() in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Application\Services\UserService.cs:line 116
+   at StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync() in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api\Controllers\UsersController.cs:line 87
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at StudentCoursePlatform.Api.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api\Middlewares\GlobalExceptionMiddleware.cs:line 25
+2026-03-14 11:40:13.164 +05:00 [INF] Request finished HTTP/2 DELETE https://localhost:7222/api/users/account - 500 null application/json 51299.2046ms
+2026-03-14 11:41:23.630 +05:00 [INF] Request starting HTTP/2 PUT https://localhost:7222/api/users - application/json 24
+2026-03-14 11:41:23.632 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:41:23.633 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:41:23.635 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.UpdateAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:41:23.642 +05:00 [INF] Route matched with {action = "Update", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserUpdateDto) on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:41:35.219 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.UsersController.UpdateAsync (StudentCoursePlatform.Api) in 11575.1516ms
+2026-03-14 11:41:35.222 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.UpdateAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:41:37.495 +05:00 [ERR] Unhandled exception: User id not found in token
+System.UnauthorizedAccessException: User id not found in token
+   at StudentCoursePlatform.Infrastructure.Security.CurrentUserService.get_UserId() in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Infrastructure\Security\CurrentUserService.cs:line 22
+   at StudentCoursePlatform.Application.Services.UserService.UpdateAsync(UserUpdateDto userUpdateDto) in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Application\Services\UserService.cs:line 189
+   at StudentCoursePlatform.Api.Controllers.UsersController.UpdateAsync(UserUpdateDto updateDto) in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api\Controllers\UsersController.cs:line 96
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at StudentCoursePlatform.Api.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api\Middlewares\GlobalExceptionMiddleware.cs:line 25
+2026-03-14 11:41:39.915 +05:00 [INF] Request finished HTTP/2 PUT https://localhost:7222/api/users - 500 null application/json 16284.8563ms
+2026-03-14 11:50:20.211 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:50:20.686 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:50:20.688 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:50:20.747 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:50:20.747 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:50:20.748 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:50:21.223 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:50:21.642 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 447.0683ms
+2026-03-14 11:50:21.659 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:50:21.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:50:21.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:50:21.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:50:21.932 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 272.231ms
+2026-03-14 11:50:21.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:50:21.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:50:21.922 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:50:21.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 305.5372ms
+2026-03-14 11:50:21.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 304.5433ms
+2026-03-14 11:50:21.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 304.6248ms
+2026-03-14 11:50:21.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 304.6246ms
+2026-03-14 11:50:22.013 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 352.9809ms
+2026-03-14 11:50:22.053 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 131.2658ms
+2026-03-14 11:50:22.090 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:50:22.251 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 160.6374ms
+2026-03-14 11:50:22.710 +05:00 [INF] Executed DbCommand (97ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:51:06.470 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/auth/login - application/json 73
+2026-03-14 11:51:06.478 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:51:06.479 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:51:06.525 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:51:06.547 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserLoginDto) on controller StudentCoursePlatform.Api.Controllers.AuthController (StudentCoursePlatform.Api).
+2026-03-14 11:51:06.629 +05:00 [INF] Authenticating user boriboyev97@mail.ru
+2026-03-14 11:51:06.768 +05:00 [INF] Executed DbCommand (16ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Email" = @email
+LIMIT 1
+2026-03-14 11:51:07.047 +05:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = DateTime), @p6='?', @p7='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpireAt", "IsRevoked", "ReplacedByToken", "RevokedAt", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-03-14 11:51:07.060 +05:00 [INF] User boriboyev97@mail.ru authenticated successfully
+2026-03-14 11:51:07.069 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.LoginResponseDto'.
+2026-03-14 11:51:07.087 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api) in 536.355ms
+2026-03-14 11:51:07.089 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:51:07.097 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/auth/login - 200 null application/json; charset=utf-8 627.164ms
+2026-03-14 11:51:29.102 +05:00 [INF] Request starting HTTP/2 DELETE https://localhost:7222/api/users/account - null null
+2026-03-14 11:51:29.106 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:51:29.106 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:51:29.153 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'bFbLW0WJYU1QoahbvItjMCZWND_mmMsPJS9_DnnsvPs'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignature(JsonWebToken jwtToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateSignatureAndIssuerSecurityKey(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-03-14 11:51:29.156 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10517: Signature validation failed. The token's kid is missing. Keys tried: 'Microsoft.IdentityModel.Tokens.SymmetricSecurityKey, KeyId: '', InternalId: 'bFbLW0WJYU1QoahbvItjMCZWND_mmMsPJS9_DnnsvPs'. , KeyId: 
+'. Number of keys in TokenValidationParameters: '1'. 
+Number of keys in Configuration: '0'. 
+Exceptions caught:
+ '[PII of type 'System.Text.StringBuilder' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'.
+token: '[PII of type 'Microsoft.IdentityModel.JsonWebTokens.JsonWebToken' is hidden. For more details, see https://aka.ms/IdentityModel/PII.]'. See https://aka.ms/IDX10503 for details.
+2026-03-14 11:51:29.162 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-03-14 11:51:29.169 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-14 11:51:29.170 +05:00 [INF] Request finished HTTP/2 DELETE https://localhost:7222/api/users/account - 401 0 null 68.4817ms
+2026-03-14 11:52:07.539 +05:00 [INF] Request starting HTTP/2 DELETE https://localhost:7222/api/users/account - null null
+2026-03-14 11:52:07.542 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:52:07.542 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:52:07.562 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:52:07.570 +05:00 [INF] Route matched with {action = "DeleteAccount", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteAccountAsync() on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:57:15.894 +05:00 [INF] User profile is available. Using 'C:\Users\diyor\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-14 11:57:16.156 +05:00 [INF] Now listening on: https://localhost:7222
+2026-03-14 11:57:16.157 +05:00 [INF] Now listening on: http://localhost:5020
+2026-03-14 11:57:16.213 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-14 11:57:16.213 +05:00 [INF] Hosting environment: Development
+2026-03-14 11:57:16.214 +05:00 [INF] Content root path: D:\@\Diyorbek\Coding\DotNet\UchinchiModul\StudentCoursePlatform\StudentCoursePlatform.Api
+2026-03-14 11:57:16.744 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.html - null null
+2026-03-14 11:57:17.093 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.html - 304 null null 360.485ms
+2026-03-14 11:57:17.110 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - null null
+2026-03-14 11:57:17.111 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - null null
+2026-03-14 11:57:17.112 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.js - null null
+2026-03-14 11:57:17.111 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - null null
+2026-03-14 11:57:17.129 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.js - 304 null null 17.2376ms
+2026-03-14 11:57:17.111 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-14 11:57:17.111 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/index.css - null null
+2026-03-14 11:57:17.134 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/_vs/browserLink - null null
+2026-03-14 11:57:17.151 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/index.css - 304 null null 39.8401ms
+2026-03-14 11:57:17.151 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-standalone-preset.js - 304 null null 39.811ms
+2026-03-14 11:57:17.151 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui-bundle.js - 304 null null 39.8235ms
+2026-03-14 11:57:17.151 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/swagger-ui.css - 304 null null 41.3263ms
+2026-03-14 11:57:17.200 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_framework/aspnetcore-browser-refresh.js - 200 14955 application/javascript; charset=utf-8 89.0606ms
+2026-03-14 11:57:17.234 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/_vs/browserLink - 200 null text/javascript; charset=UTF-8 100.7155ms
+2026-03-14 11:57:17.265 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - null null
+2026-03-14 11:57:17.405 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 140.3018ms
+2026-03-14 11:57:17.735 +05:00 [INF] Executed DbCommand (65ms) [Parameters=[@cutoffDate='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "RefreshTokens" AS r
+WHERE r."ExpireAt" < @cutoffDate AND r."IsRevoked"
+2026-03-14 11:57:40.753 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7222/api/auth/login - application/json 73
+2026-03-14 11:57:40.763 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:57:40.764 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:57:40.811 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:57:40.832 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(StudentCoursePlatform.Application.DTOs.Users.Requests.UserLoginDto) on controller StudentCoursePlatform.Api.Controllers.AuthController (StudentCoursePlatform.Api).
+2026-03-14 11:57:40.891 +05:00 [INF] Authenticating user boriboyev97@mail.ru
+2026-03-14 11:57:41.030 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@email='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Email" = @email
+LIMIT 1
+2026-03-14 11:57:41.279 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = DateTime), @p6='?', @p7='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpireAt", "IsRevoked", "ReplacedByToken", "RevokedAt", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-03-14 11:57:41.292 +05:00 [INF] User boriboyev97@mail.ru authenticated successfully
+2026-03-14 11:57:41.301 +05:00 [INF] Executing OkObjectResult, writing value of type 'StudentCoursePlatform.Application.DTOs.Users.Responses.LoginResponseDto'.
+2026-03-14 11:57:41.319 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api) in 482.0748ms
+2026-03-14 11:57:41.320 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.AuthController.LoginAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:57:41.328 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7222/api/auth/login - 200 null application/json; charset=utf-8 575.7967ms
+2026-03-14 11:58:04.387 +05:00 [INF] Request starting HTTP/2 DELETE https://localhost:7222/api/users/account - null null
+2026-03-14 11:58:04.393 +05:00 [INF] CORS policy execution failed.
+2026-03-14 11:58:04.394 +05:00 [INF] Request origin https://localhost:7222 does not have permission to access the resource.
+2026-03-14 11:58:04.441 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:58:04.448 +05:00 [INF] Route matched with {action = "DeleteAccount", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteAccountAsync() on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:58:04.463 +05:00 [INF] Deleting userId: "71f6d75c-dcef-42e5-9eb7-dd65c16db39c"
+2026-03-14 11:58:04.519 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Id" = @p
+LIMIT 1
+2026-03-14 11:58:04.543 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "Users"
+WHERE "Id" = @p0;
+2026-03-14 11:58:04.547 +05:00 [INF] User "71f6d75c-dcef-42e5-9eb7-dd65c16db39c" deleted
+2026-03-14 11:58:04.551 +05:00 [INF] Executing StatusCodeResult, setting HTTP status code 204
+2026-03-14 11:58:04.551 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api) in 101.6381ms
+2026-03-14 11:58:04.553 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.DeleteAccountAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:58:04.554 +05:00 [INF] Request finished HTTP/2 DELETE https://localhost:7222/api/users/account - 204 null null 166.9075ms
+2026-03-14 11:58:52.702 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7222/api/users/71f6d75c-dcef-42e5-9eb7-dd65c16db39c - null null
+2026-03-14 11:58:52.711 +05:00 [INF] Executing endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:58:52.721 +05:00 [INF] Route matched with {action = "GetById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetByIdAsync(System.Guid) on controller StudentCoursePlatform.Api.Controllers.UsersController (StudentCoursePlatform.Api).
+2026-03-14 11:58:52.732 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Email", u."FullName", u."PasswordHash", u."Role", u."UpdatedAt"
+FROM "Users" AS u
+WHERE u."Id" = @p
+LIMIT 1
+2026-03-14 11:58:52.735 +05:00 [INF] Executing NotFoundObjectResult, writing value of type 'System.String[]'.
+2026-03-14 11:58:52.736 +05:00 [INF] Executed action StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api) in 13.7671ms
+2026-03-14 11:58:52.738 +05:00 [INF] Executed endpoint 'StudentCoursePlatform.Api.Controllers.UsersController.GetByIdAsync (StudentCoursePlatform.Api)'
+2026-03-14 11:58:52.739 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7222/api/users/71f6d75c-dcef-42e5-9eb7-dd65c16db39c - 404 null application/json; charset=utf-8 36.8355ms

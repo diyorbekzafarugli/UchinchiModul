@@ -10,13 +10,14 @@ public class QuestionRepository : GenericRepository<Question>, IQuestionReposito
     public QuestionRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }
-    public async Task<List<Question>> GetQuestionsByQuizIdAsync(Guid quizId, int page, int pageSize)
+    public async Task<List<Question>> GetQuestionsByQuizIdAsync(Guid quizId, int page, int pageSize,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.Questions
             .Where(q => q.QuizId == quizId)
             .OrderBy(q => q.Order)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 }

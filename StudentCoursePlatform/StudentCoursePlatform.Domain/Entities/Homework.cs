@@ -1,8 +1,7 @@
 ﻿namespace StudentCoursePlatform.Domain.Entities;
 
-public class Homework : IEntity
+public class Homework : AuditableEntity
 {
-    public Guid Id { get; set; }
 
     public Guid CourseId { get; set; }
     public Guid? LessonId { get; set; }
@@ -12,9 +11,6 @@ public class Homework : IEntity
 
     public DateTime DueDate { get; set; }
     public int MaxScore { get; set; }
-
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; set; }
 
     public Course Course { get; set; } = null!;
     public Lesson? Lesson { get; set; }

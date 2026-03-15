@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StudentCoursePlatform.Domain.Enums;
+﻿namespace StudentCoursePlatform.Domain.Enums;
 
 public enum UserRole
 {

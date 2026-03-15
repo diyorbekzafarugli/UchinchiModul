@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentCoursePlatform.Application.Abstractions.Repositories;
-using StudentCoursePlatform.Domain.Entities;
 using StudentCoursePlatform.Infrastructure.Persistence;
 
 namespace StudentCoursePlatform.Infrastructure.Repositories;
@@ -13,29 +12,41 @@ public class RefreshTokenRepository : IRefreshTokenRepository
         _dbContext = dbContext;
     }
 
-    public async Task AddAsync(RefreshToken refreshToken)
+    public async Task AddAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
-        await _dbContext.RefreshTokens.AddAsync(refreshToken);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.RefreshTokens.AddAsync(refreshToken, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<RefreshToken>> GetAllByUserIdAsync(Guid userId)
+    public async Task DeleteOldTokensAsync(DateTime cutoffDate, CancellationToken cancellationToken)
+    {
+        var tokens = await _dbContext.RefreshTokens
+            .Where(t => t.ExpireAt < cutoffDate && t.IsRevoked)
+            .ExecuteDeleteAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.RefreshTokens
-            .Where(rt => rt.UserId == userId)
-            .ToListAsync();
+            .Where(t => t.UserId == userId)
+            .ToListAsync(cancellationToken);
     }
 
-    public async Task<RefreshToken?> GetByTokenHashAsync(string tokenHash)
+    public async Task<RefreshToken?> GetByTokenHashAsync(string tokenHash, CancellationToken cancellationToken)
     {
         return await _dbContext.RefreshTokens
-            .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash);
+            .FirstOrDefaultAsync(t => t.TokenHash == tokenHash, cancellationToken);
     }
 
-    public async Task RevokeAsync(RefreshToken token)
+    public async Task UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
-        token.IsRevoked = true;
-        _dbContext.RefreshTokens.Update(token);
-        await _dbContext.SaveChangesAsync();
+        _dbContext.RefreshTokens.Update(refreshToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public Task UpdateRangeAsync(IReadOnlyList<RefreshToken> tokens, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }

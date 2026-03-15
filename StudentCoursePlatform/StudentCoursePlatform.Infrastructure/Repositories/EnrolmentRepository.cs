@@ -5,21 +5,24 @@ using StudentCoursePlatform.Infrastructure.Persistence;
 
 namespace StudentCoursePlatform.Infrastructure.Repositories;
 
-public class EnrolmentRepository(AppDbContext appDbContext) : GenericRepository<Enrollment>(appDbContext), IEnrolmentRepository
+public class EnrolmentRepository(AppDbContext appDbContext) :
+    GenericRepository<Enrollment>(appDbContext), IEnrolmentRepository
 {
-    public Task<List<Enrollment>> GetCourseEnrollmentsAsync(Guid courseId, int page, int pageSize)
+    public Task<List<Enrollment>> GetCourseEnrollmentsAsync(Guid courseId, int page, int pageSize,
+        CancellationToken cancellationToken)
     {
         return _dbContext.Enrollments
             .Where(e => e.CourseId == courseId)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 
-    public async Task<List<Enrollment>> GetStudentEnrollmentsAsync(Guid studentId)
+    public async Task<List<Enrollment>> GetStudentEnrollmentsAsync(Guid studentId,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.Enrollments
             .Where(e => e.StudentId == studentId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 }

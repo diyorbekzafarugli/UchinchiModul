@@ -4,5 +4,5 @@ namespace StudentCoursePlatform.Application.Abstractions.Repositories;
 
 public interface IQuizRepository : IGenericRepository<Quiz>
 {
-    Task<Quiz?> GetQuizByCourseId(Guid courseId);
+    Task<Quiz?> GetQuizByCourseId(Guid courseId, CancellationToken cancellationToken);
 }

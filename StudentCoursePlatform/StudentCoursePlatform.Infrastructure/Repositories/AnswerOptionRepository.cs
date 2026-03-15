@@ -11,10 +11,11 @@ public class AnswerOptionRepository : GenericRepository<AnswerOption>, IAnswerOp
     {
     }
 
-    public async Task<List<AnswerOption>> GetAnswersByQuestionIdAsync(Guid questionId)
+    public async Task<List<AnswerOption>> GetAnswersByQuestionIdAsync(Guid questionId,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.AnswerOptions
             .Where(a => a.QuestionId == questionId)
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
     }
 }

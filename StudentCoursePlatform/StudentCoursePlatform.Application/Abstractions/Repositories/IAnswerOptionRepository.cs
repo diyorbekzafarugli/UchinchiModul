@@ -4,5 +4,6 @@ namespace StudentCoursePlatform.Application.Abstractions.Repositories;
 
 public interface IAnswerOptionRepository : IGenericRepository<AnswerOption>
 {
-    Task<List<AnswerOption>> GetAnswersByQuestionIdAsync(Guid questionId);
+    Task<List<AnswerOption>> GetAnswersByQuestionIdAsync(Guid questionId,
+        CancellationToken cancellationToken);
 }

@@ -19,12 +19,26 @@ public class AppDbContext : DbContext
     public DbSet<Question> Questions => Set<Question>();
     public DbSet<AnswerOption> AnswerOptions => Set<AnswerOption>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<BlacklistedToken> BlacklistedTokens => Set<BlacklistedToken>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>().ToTable("Users");
+        modelBuilder.Entity<Course>();
+        modelBuilder.Entity<Lesson>();
+        modelBuilder.Entity<Enrollment>();
+        modelBuilder.Entity<Homework>();
+        modelBuilder.Entity<HomeworkSubmission>();
+        modelBuilder.Entity<Quiz>();
+        modelBuilder.Entity<Question>();
+        modelBuilder.Entity<AnswerOption>();
+        modelBuilder.Entity<BlacklistedToken>()
+            .HasKey(t => t.Token);
+
         modelBuilder.Entity<RefreshToken>()
             .HasOne(rt => rt.User)
             .WithMany(u => u.RefreshTokens)
-            .HasForeignKey(rt => rt.UserId);
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
 }

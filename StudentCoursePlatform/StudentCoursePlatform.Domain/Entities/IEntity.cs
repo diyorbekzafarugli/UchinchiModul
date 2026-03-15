@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StudentCoursePlatform.Domain.Entities;
+﻿namespace StudentCoursePlatform.Domain.Entities;
 
 public interface IEntity
 {
