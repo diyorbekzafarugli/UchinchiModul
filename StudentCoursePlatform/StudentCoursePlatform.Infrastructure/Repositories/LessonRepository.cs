@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using StudentCoursePlatform.Application.Abstractions.Repositories;
 using StudentCoursePlatform.Domain.Entities;
 using StudentCoursePlatform.Infrastructure.Persistence;
@@ -11,6 +12,23 @@ public class LessonRepository : GenericRepository<Lesson>, ILessonRepository
     {
 
     }
+
+    public async Task<List<Lesson>> GetByCourseIdAsync(Guid courseId,
+        CancellationToken cancellationToken)
+    {
+        return await _dbContext.Lessons
+            .Where(l => l.CourseId == courseId)
+            .OrderBy(l => l.Order)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<Lesson?> GetByIdWithCourseAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Lessons
+            .Include(l => l.Course)
+            .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
+    }
+
     public async Task<Lesson?> GetCourseByOrder(int order, CancellationToken cancellationToken)
     {
         return await _dbContext.Lessons

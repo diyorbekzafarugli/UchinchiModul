@@ -18,11 +18,11 @@ public class RefreshTokenRepository : IRefreshTokenRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteOldTokensAsync(DateTime cutoffDate, CancellationToken cancellationToken)
+    public async Task DeleteOldTokensAsync(DateTime cutoffDate)
     {
         var tokens = await _dbContext.RefreshTokens
             .Where(t => t.ExpireAt < cutoffDate && t.IsRevoked)
-            .ExecuteDeleteAsync(cancellationToken);
+            .ExecuteDeleteAsync();
     }
 
     public async Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId,
@@ -43,10 +43,5 @@ public class RefreshTokenRepository : IRefreshTokenRepository
     {
         _dbContext.RefreshTokens.Update(refreshToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    public Task UpdateRangeAsync(IReadOnlyList<RefreshToken> tokens, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 }

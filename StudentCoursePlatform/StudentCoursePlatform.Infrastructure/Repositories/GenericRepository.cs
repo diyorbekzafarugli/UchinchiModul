@@ -38,9 +38,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class, IEnti
             .FindAsync(id, cancellationToken);
     }
 
-    public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
+    public virtual async Task UpdateAsync(T entity, CancellationToken ct)
     {
-        _dbContext.Entry(entity).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        if (entity is AuditableEntity auditable)
+            auditable.UpdatedAt = DateTime.UtcNow;
+
+        _dbContext.Update(entity);
+        await _dbContext.SaveChangesAsync(ct);
     }
 }

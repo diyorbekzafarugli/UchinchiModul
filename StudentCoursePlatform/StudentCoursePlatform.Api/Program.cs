@@ -26,6 +26,13 @@ builder.Services.AddHostedService<TokenCleanupService>();
 
 var app = builder.Build();
 
+app.UseRequestLocalization(options =>
+{
+    var cultures = new[] { "en", "ru", "uz" };
+    options.SetDefaultCulture("uz")
+           .AddSupportedCultures(cultures)
+           .AddSupportedUICultures(cultures);
+});
 app.UseCors();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseMiddleware<TokenBlacklistMiddleware>();

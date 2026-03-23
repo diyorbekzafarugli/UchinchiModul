@@ -6,6 +6,5 @@ public interface IRefreshTokenRepository
     Task UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken);
     Task<RefreshToken?> GetByTokenHashAsync(string tokenHash, CancellationToken cancellationToken);
     Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
-    Task UpdateRangeAsync(IReadOnlyList<RefreshToken> tokens, CancellationToken cancellationToken);
     Task DeleteOldTokensAsync(DateTime cutoffDate);
 }

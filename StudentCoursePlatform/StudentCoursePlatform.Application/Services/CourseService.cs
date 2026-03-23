@@ -8,32 +8,31 @@ using StudentCoursePlatform.Application.DTOs.Courses.Requests;
 using StudentCoursePlatform.Application.DTOs.Courses.Responses;
 using StudentCoursePlatform.Application.Interfaces;
 using StudentCoursePlatform.Domain.Entities;
-using System.Data;
 
 namespace StudentCoursePlatform.Application.Services;
 
 public class CourseService : ICourseService
 {
     private readonly ICourseRepository _courseRepository;
-    private readonly IUserRepository _userRepository;
     private readonly IStringLocalizer<CourseService> _localizer;
     private readonly IValidator<CreateCourseDto> _validator;
     private readonly ILogger<CourseService> _logger;
     private readonly ICurrentUserService _currentUser;
+    private readonly IUserRepository _userRepository;
 
     public CourseService(ICourseRepository courseRepository,
-                         IUserRepository userRepository,
                          IStringLocalizer<CourseService> localizer,
                          IValidator<CreateCourseDto> validator,
                          ILogger<CourseService> logger,
-                         ICurrentUserService currentUser)
+                         ICurrentUserService currentUser,
+                         IUserRepository userRepository)
     {
         _courseRepository = courseRepository;
-        _userRepository = userRepository;
         _localizer = localizer;
         _validator = validator;
         _logger = logger;
         _currentUser = currentUser;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<GetCourseDto>> CreateAsync(CreateCourseDto dto,
@@ -45,13 +44,13 @@ public class CourseService : ICourseService
         var validationResult = _validator.Validate(dto);
         if (!validationResult.IsValid)
         {
-            _logger.LogWarning("Validation failed for TeacherId {TeacherId}", dto.TeacherId);
+            _logger.LogWarning("Validation failed for Teacher {TeacherId}", teacherId);
             var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
             return Result<GetCourseDto>.Fail(errors);
         }
 
         var teacherFromDb = await _userRepository.GetByIdAsync(teacherId, cancellationToken);
-        if (teacherFromDb is null || teacherFromDb.Role != Domain.Enums.UserRole.Teacher)
+        if (teacherFromDb == null)
         {
             _logger.LogWarning("User {TeacherId} not found or is not a teacher", teacherId);
             return Result<GetCourseDto>.Fail(_localizer["TeacherNotFound"]);
@@ -66,7 +65,7 @@ public class CourseService : ICourseService
         };
 
         await _courseRepository.AddAsync(course, cancellationToken);
-        _logger.LogInformation("Course successfully created by Teacher {TeacherId}", dto.TeacherId);
+        _logger.LogInformation("Course successfully created by Teacher {TeacherId}", teacherId);
 
         return Result<GetCourseDto>.Success(new GetCourseDto
         {
@@ -89,13 +88,6 @@ public class CourseService : ICourseService
         var teacherId = _currentUser.UserId;
 
         _logger.LogInformation("Teacher {TeacherId} is attempting to delete course {CourseId}", teacherId, id);
-
-        var teacherFromDb = await _userRepository.GetByIdAsync(teacherId, cancellationToken);
-        if (teacherFromDb is null || teacherFromDb.Role != Domain.Enums.UserRole.Teacher)
-        {
-            _logger.LogWarning("User {TeacherId} not found or is not a teacher", teacherId);
-            return Result<bool>.Fail(_localizer["TeacherNotFound"]);
-        }
 
         var course = await _courseRepository.GetByIdAsync(id, cancellationToken);
         if (course is null)
@@ -149,20 +141,7 @@ public class CourseService : ICourseService
             return Result<GetCourseDto>.Fail(_localizer["CourseNotFound"]);
         }
 
-        return Result<GetCourseDto>.Success(new GetCourseDto
-        {
-            Id = course.Id,
-            Title = course.Title,
-            Description = course.Description,
-            ImageUrl = course.ImageUrl,
-            TeacherId = course.TeacherId,
-            TeacherName = course.Teacher.FullName,
-            IsPublished = course.IsPublished,
-            CreatedAt = course.CreatedAt,
-            UpdatedAt = course.UpdatedAt,
-            LessonCount = course.Lessons.Count,
-            EnrollmentCount = course.Enrollments.Count
-        });
+        return Result<GetCourseDto>.Success(MapToGetDto(course));
     }
 
     public async Task<Result<List<GetCourseDto>>> GetByTeacherIdAsync(CancellationToken cancellationToken)
@@ -171,85 +150,13 @@ public class CourseService : ICourseService
         _logger.LogInformation("Course {TeacherId} is getting", teacherId);
         var courses = await _courseRepository.GetCourseByTeacherIdAsync(teacherId, cancellationToken);
 
-        return Result<List<GetCourseDto>>.Success(courses.Select(course => new GetCourseDto
-        {
-            Id = course.Id,
-            Title = course.Title,
-            Description = course.Description,
-            ImageUrl = course.ImageUrl,
-            TeacherId = course.TeacherId,
-            TeacherName = course.Teacher.FullName,
-            IsPublished = course.IsPublished,
-            CreatedAt = course.CreatedAt,
-            UpdatedAt = course.UpdatedAt,
-            LessonCount = course.Lessons.Count,
-            EnrollmentCount = course.Enrollments.Count
-        }).ToList());
+        return Result<List<GetCourseDto>>.Success(courses.Select(course => MapToGetDto(course)).ToList());
     }
 
-    public async Task<Result<bool>> PublishAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var teacherId = _currentUser.UserId;
-        _logger.LogInformation("Teacher {TeacherId} is attempting to publish their course {CourseId}", teacherId, id);
-
-        var teacherFromDb = await _userRepository.GetByIdAsync(teacherId, cancellationToken);
-        if (teacherFromDb is null || teacherFromDb.Role != Domain.Enums.UserRole.Teacher)
-        {
-            _logger.LogWarning("User {TeacherId} not found or is not a teacher", teacherId);
-            return Result<bool>.Fail(_localizer["TeacherNotFound"]);
-        }
-
-        var course = await _courseRepository.GetByIdAsync(id, cancellationToken);
-        if (course == null)
-        {
-            _logger.LogWarning("Course {CourseId} not found", id);
-            return Result<bool>.Fail(_localizer["CourseNotFound"]);
-        }
-
-        if (course.TeacherId != teacherId)
-        {
-            _logger.LogWarning("Teacher {TeacherId} tried to publish someone else's course {CourseId}", teacherId, id);
-            return Result<bool>.Fail(_localizer["Forbidden"]);
-        }
-
-        course.IsPublished = true;
-        await _courseRepository.UpdateAsync(course, cancellationToken);
-        _logger.LogInformation("Course {CourseId} successfully published by Teacher {TeacherId}", id, teacherId);
-
-        return Result<bool>.Success(true);
-    }
-
-    public async Task<Result<bool>> UnpublishAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var teacherId = _currentUser.UserId;
-        _logger.LogInformation("Teacher {TeacherId} is attempting to unpublish their course {CourseId}", teacherId, id);
-
-        var teacherFromDb = await _userRepository.GetByIdAsync(teacherId, cancellationToken);
-        if (teacherFromDb is null || teacherFromDb.Role != Domain.Enums.UserRole.Teacher)
-        {
-            _logger.LogWarning("User {TeacherId} not found or is not a teacher", teacherId);
-            return Result<bool>.Fail(_localizer["TeacherNotFound"]);
-        }
-
-        var course = await _courseRepository.GetByIdAsync(id, cancellationToken);
-        if (course == null)
-        {
-            _logger.LogWarning("Course {CourseId} not found", id);
-            return Result<bool>.Fail(_localizer["CourseNotFound"]);
-        }
-
-        if (course.TeacherId != teacherId)
-        {
-            _logger.LogWarning("Teacher {TeacherId} tried to unpublish someone else's course {CourseId}", teacherId, id);
-            return Result<bool>.Fail(_localizer["Forbidden"]);
-        }
-
-        course.IsPublished = false;
-        await _courseRepository.UpdateAsync(course, cancellationToken);
-        _logger.LogInformation("Course {CourseId} successfully unpublished by Teacher {TeacherId}", id, teacherId);
-
-        return Result<bool>.Success(true);
-    }
+    public Task<Result<bool>> PublishAsync(Guid id, CancellationToken ct) =>
+        SetPublishStatusAsync(id, true, ct);
+    public Task<Result<bool>> UnpublishAsync(Guid id, CancellationToken ct) =>
+        SetPublishStatusAsync(id, false, ct);
 
     public async Task<Result<GetCourseDto>> UpdateAsync(Guid id, UpdateCourseDto dto, CancellationToken cancellationToken)
     {
@@ -272,24 +179,53 @@ public class CourseService : ICourseService
         course.Title = dto.Title ?? course.Title;
         course.Description = dto.Description ?? course.Description;
         course.ImageUrl = dto.ImageUrl ?? course.ImageUrl;
-        course.UpdatedAt = DateTime.UtcNow;
         await _courseRepository.UpdateAsync(course, cancellationToken);
 
         _logger.LogInformation("Course {CourseId} updated successfuly by teacher {TeacherId}", id, teacherId);
 
-        return Result<GetCourseDto>.Success(new GetCourseDto
-        {
-            Id = course.Id,
-            Title = course.Title,
-            Description = course.Description,
-            ImageUrl = course.ImageUrl,
-            TeacherId = course.TeacherId,
-            TeacherName = course.Teacher.FullName,
-            IsPublished = course.IsPublished,
-            CreatedAt = course.CreatedAt,
-            UpdatedAt = course.UpdatedAt,
-            LessonCount = course.Lessons.Count,
-            EnrollmentCount = course.Enrollments.Count
-        });
+        return Result<GetCourseDto>.Success(MapToGetDto(course));
     }
+
+    private async Task<(Course? course, string? error)> GetAndValidateOwnershipAsync(
+         Guid id, Guid teacherId, CancellationToken cancellationToken)
+    {
+        var course = await _courseRepository.GetByIdAsync(id, cancellationToken);
+        if (course == null)
+            return (null, _localizer["CourseNotFound"]);
+
+        if (course.TeacherId != teacherId)
+            return (null, _localizer["Forbidden"]);
+
+        return (course, null);
+    }
+
+    private async Task<Result<bool>> SetPublishStatusAsync(Guid id, bool isPublished, CancellationToken ct)
+    {
+        var teacherId = _currentUser.UserId;
+        var action = isPublished ? "publish" : "unpublish";
+        _logger.LogInformation("Teacher {TeacherId} is attempting to {Action} course {CourseId}", teacherId, action, id);
+
+        var (course, error) = await GetAndValidateOwnershipAsync(id, teacherId, ct);
+        if (error != null) return Result<bool>.Fail(error);
+
+        course!.IsPublished = isPublished;
+        await _courseRepository.UpdateAsync(course, ct);
+        _logger.LogInformation("Teacher {TeacherId} successfully {Action}ed course {CourseId}", teacherId, action, id);
+        return Result<bool>.Success(true);
+    }
+
+    private GetCourseDto MapToGetDto(Course course) => new GetCourseDto
+    {
+        Id = course.Id,
+        Title = course.Title,
+        Description = course.Description,
+        ImageUrl = course.ImageUrl,
+        TeacherId = course.TeacherId,
+        TeacherName = course.Teacher.FullName,
+        IsPublished = course.IsPublished,
+        CreatedAt = course.CreatedAt,
+        UpdatedAt = course.UpdatedAt,
+        LessonCount = course.Lessons.Count,
+        EnrollmentCount = course.Enrollments.Count
+    };
 }
