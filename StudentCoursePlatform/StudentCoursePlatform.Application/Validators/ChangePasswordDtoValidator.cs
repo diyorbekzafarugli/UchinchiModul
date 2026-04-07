@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using StudentCoursePlatform.Application.DTOs.Users.Requests;
+using StudentCoursePlatform.Application.Resources;
 
 namespace StudentCoursePlatform.Application.Validators;
 
 public class ChangePasswordDtoValidator : AbstractValidator<ChangePasswordDto>
 {
-    public ChangePasswordDtoValidator(IStringLocalizer<ChangePasswordDtoValidator> localizer)
+    public ChangePasswordDtoValidator(IStringLocalizer<SharedResource> localizer)
     {
         RuleFor(x => x.NewPassword)
             .NotNull().WithMessage(localizer["PasswordRequired"])

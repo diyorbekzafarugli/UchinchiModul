@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Tizimga kirish</h2>
+    <p>Platformaga xush kelibsiz!</p>
+
+    <form (ngSubmit)="onSubmit()">
+      
+      <div class="input-group">
+        <label for="email">Elektron pochta</label>
+        <input type="email" id="email" name="email" [(ngModel)]="loginData.email" placeholder="name@example.com" required>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Parol</label>
+        <input type="password" id="password" name="password" [(ngModel)]="loginData.password" placeholder="********" required>
+      </div>
+
+      <button type="submit">Kirish</button>
+    </form>
+
+    <div class="auth-footer">
+      Akkauntingiz yo'qmi? <a routerLink="/register">Ro'yxatdan o'tish</a>
+    </div>
+  </div>
+</div>

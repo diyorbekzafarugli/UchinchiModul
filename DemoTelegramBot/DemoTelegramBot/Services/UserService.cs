@@ -2,9 +2,6 @@
 using DemoTelegramBot.Dtos;
 using DemoTelegramBot.Entities;
 using DemoTelegramBot.Repositories;
-using DemoTelegramBot.Security;
-
-using DemoTelegramBot.Services;
 
 namespace DemoTelegramBot.Services;
 

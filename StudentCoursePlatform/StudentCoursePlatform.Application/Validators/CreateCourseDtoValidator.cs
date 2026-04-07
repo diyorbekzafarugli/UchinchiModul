@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using StudentCoursePlatform.Application.DTOs.Courses.Requestes;
+using StudentCoursePlatform.Application.Resources;
 
 namespace StudentCoursePlatform.Application.Validators;
 
 public class CreateCourseDtoValidator : AbstractValidator<CreateCourseDto>
 {
-    public CreateCourseDtoValidator(IStringLocalizer<CreateCourseDto> localizer)
+    public CreateCourseDtoValidator(IStringLocalizer<SharedResource> localizer)
     {
         RuleFor(c => c.Title)
             .NotEmpty().WithMessage(localizer["TitleRequired"])

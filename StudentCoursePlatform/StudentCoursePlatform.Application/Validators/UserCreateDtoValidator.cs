@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Localization;
 using StudentCoursePlatform.Application.DTOs.Users.Requests;
+using StudentCoursePlatform.Application.Resources;
 
 namespace StudentCoursePlatform.Application.Validators;
 
 public class UserCreateDtoValidator : AbstractValidator<UserCreateDto>
 {
-    public UserCreateDtoValidator(IStringLocalizer<UserCreateDtoValidator> localizer)
+    public UserCreateDtoValidator(IStringLocalizer<SharedResource> localizer)
     {
         RuleFor(x => x.FullName)
             .NotNull().WithMessage(localizer["FullNameRequired"])

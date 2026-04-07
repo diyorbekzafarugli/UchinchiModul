@@ -45,7 +45,7 @@ public sealed class MessageHandler : IMessageHandler
         {
             s.TempUserName = text;
             s.Step = BotStep.Register_Password;
-            await botClient.SendMessage(chatId, "🔑 Parol yuboring (kamida 6 ta):", cancellationToken: ct);
+            await botClient.SendMessage(chatId, "🔑 Parol yuboring (kamida 8 ta):", cancellationToken: ct);
             return;
         }
 

@@ -37,7 +37,8 @@ internal class RefreshTokenService : IRefreshTokenService
         return (refreshToken, plainToken);
     }
 
-    public async Task<RefreshToken?> GetTokenAsync(string plainToken, CancellationToken cancellationToken)
+    public async Task<RefreshToken?> GetTokenAsync(string plainToken,
+        CancellationToken cancellationToken)
     {
         var hashedToken = Convert.ToHexString(
             SHA256.HashData(Encoding.UTF8.GetBytes(plainToken))
@@ -57,12 +58,14 @@ internal class RefreshTokenService : IRefreshTokenService
         return true;
     }
 
-    public async Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<RefreshToken>> GetAllByUserIdAsync(Guid userId,
+        CancellationToken cancellationToken)
     {
         return await _tokenRepository.GetAllByUserIdAsync(userId, cancellationToken);
     }
 
-    public async Task UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
+    public async Task UpdateAsync(RefreshToken refreshToken,
+        CancellationToken cancellationToken)
     {
         await _tokenRepository.UpdateAsync(refreshToken, cancellationToken);
     }

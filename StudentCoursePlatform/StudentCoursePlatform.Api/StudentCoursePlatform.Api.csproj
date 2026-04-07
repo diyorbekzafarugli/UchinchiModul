@@ -27,4 +27,8 @@
     <ProjectReference Include="..\StudentCoursePlatform.Infrastructure\StudentCoursePlatform.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
 </Project>

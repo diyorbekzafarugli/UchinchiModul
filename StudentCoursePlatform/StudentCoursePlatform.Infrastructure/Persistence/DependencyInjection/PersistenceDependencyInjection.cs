@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StudentCoursePlatform.Application.Abstractions.Repositories;
+using StudentCoursePlatform.Application.Interfaces;
 using StudentCoursePlatform.Infrastructure.Repositories;
+using StudentCoursePlatform.Infrastructure.Services;
 
 namespace StudentCoursePlatform.Infrastructure.Persistence.DependencyInjection;
 
@@ -26,6 +28,8 @@ public static class PersistenceDependencyInjection
         services.AddScoped<IQuizRepository, QuizRepository>();
         services.AddScoped<IAnswerOptionRepository, AnswerOptionRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        //services.AddScoped<IFileService, FileService>();
+        services.AddScoped<IFileService, CloudinaryFileService>();
 
         return services;
     }

@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudentCoursePlatform.Application.Common;
 using StudentCoursePlatform.Application.DTOs.Courses.Requestes;
 using StudentCoursePlatform.Application.Interfaces;
 
 namespace StudentCoursePlatform.Api.Controllers;
 
 [ApiController]
-[Route("api/cources")]
+[Route("api/courses")]
 [Authorize]
 public class CoursesController : ControllerBase
 {
@@ -39,7 +40,16 @@ public class CoursesController : ControllerBase
 
         return Ok(result.Data);
     }
+    [HttpGet]
+    public async Task<IActionResult> GetAllAsync(string? searchTerm,
+        [FromQuery] PaginationParams pagination, CancellationToken cancellationToken)
+    {
+        var result = await _courseService.GetAllAsync(searchTerm, pagination, cancellationToken);
+        if (!result.IsSuccess) return BadRequest(result.Errors);
 
+        return Ok(result.Data);
+
+    }
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "Teacher")]
     public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateCourseDto dto,

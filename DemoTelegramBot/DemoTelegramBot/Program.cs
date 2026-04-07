@@ -40,8 +40,8 @@ internal class Program
         IMessageHandler messageHandler = new MessageHandler(ctx, authService, postService, adminService, ui);
         ICallbackHandler callbackHandler = new CallbackHandler(ctx, ui, authService, userRepo, postRepo);
 
-        DemoTelegramBot.Bot.Handlers.IUpdateHandler updateHandler =
-        new DemoTelegramBot.Bot.Handlers.UpdateHandler(messageHandler, callbackHandler);
+        Bot.Handlers.IUpdateHandler updateHandler =
+        new UpdateHandler(messageHandler, callbackHandler);
 
         IErrorHandler errorHandler = new ErrorHandler();
 

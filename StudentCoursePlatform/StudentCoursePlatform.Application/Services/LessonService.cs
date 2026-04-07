@@ -108,7 +108,8 @@ public class LessonService : ILessonService
         }).ToList());
     }
 
-    public async Task<Result<GetLessonDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Result<GetLessonDto>> GetByIdAsync(Guid id,
+        CancellationToken cancellationToken)
     {
         var lesson = await _lessonRepository.GetByIdAsync(id, cancellationToken);
         if (lesson == null)

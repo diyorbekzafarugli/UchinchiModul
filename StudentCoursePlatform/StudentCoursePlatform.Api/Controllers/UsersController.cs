@@ -36,9 +36,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken,
-        [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
         var pagination = new PaginationParams(page, pageSize);
         var result = await _userService.GetAllAsync(pagination, cancellationToken);

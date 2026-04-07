@@ -1,7 +1,6 @@
-﻿using FluentValidation;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using StudentCoursePlatform.Application.DTOs.Users.Requests;
 using StudentCoursePlatform.Infrastructure.Security;
 using System.Text;
 
@@ -15,6 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "StudentCoursePlatform API", Version = "v1" });
+
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",
@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
                 In = ParameterLocation.Header,
                 Description = "JWT tokenni kiriting"
             });
+
             options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
             {
                 [new OpenApiSecuritySchemeReference("Bearer", document)] = []
@@ -38,12 +39,13 @@ public static class ServiceCollectionExtensions
         services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
 
         var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET_KEY")
-            ?? throw new InvalidOperationException("JWT_SECRET_KEY environment variable not found");
+            ?? configuration["JwtOptions:SecretKey"]
+            ?? throw new InvalidOperationException("JWT_SECRET_KEY topilmadi! appsettings.json ni tekshiring.");
 
         var jwtIssuer = configuration["JwtOptions:Issuer"];
         var jwtAudience = configuration["JwtOptions:Audience"];
 
-        services.AddAuthentication("Bearer")
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -68,18 +70,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddCors(options =>
             options.AddDefaultPolicy(policy =>
-                policy.WithOrigins("http://localhost:5173")
+                policy.WithOrigins("http://localhost:4200")
                       .AllowAnyHeader()
-                      .AllowAnyMethod()));
-
-        return services;
-    }
-
-    public static IServiceCollection AddValidators(this IServiceCollection services)
-    {
-        services.AddValidatorsFromAssemblyContaining<UserRegisterDto>();
-        services.AddValidatorsFromAssemblyContaining<UserCreateDto>();
-        services.AddValidatorsFromAssemblyContaining<ChangePasswordDto>();
+                      .AllowAnyMethod()
+                      .AllowCredentials()));
 
         return services;
     }

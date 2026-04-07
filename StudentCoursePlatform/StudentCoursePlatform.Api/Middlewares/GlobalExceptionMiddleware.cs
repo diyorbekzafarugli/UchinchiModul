@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using StudentCoursePlatform.Application.Resources;
 using System.Net;
 using System.Text.Json;
 
@@ -8,14 +9,18 @@ public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GlobalExceptionMiddleware> _logger;
-    private readonly IStringLocalizer<GlobalExceptionMiddleware> _localizer;
+    private readonly IStringLocalizer<SharedResource> _localizer;
+    private readonly IHostEnvironment _env;
+
     public GlobalExceptionMiddleware(RequestDelegate next,
             ILogger<GlobalExceptionMiddleware> logger,
-            IStringLocalizer<GlobalExceptionMiddleware> localizer)
+            IStringLocalizer<SharedResource> localizer,
+            IHostEnvironment env)
     {
         _next = next;
         _logger = logger;
         _localizer = localizer;
+        _env = env;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -31,10 +36,14 @@ public class GlobalExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
 
+            string errorMessage = _env.IsDevelopment()
+                ? ex.Message
+                : _localizer["ServerError"].Value;
+
             var response = new
             {
-                statusCode = (int)HttpStatusCode.InternalServerError,
-                message = _localizer["ServerError"]
+                isSuccess = false,
+                errors = new[] { errorMessage }
             };
 
             await context.Response.WriteAsync(JsonSerializer.Serialize(response));
